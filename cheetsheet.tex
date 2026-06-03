@@ -1,0 +1,557 @@
+\documentclass[landscape,a4paper]{article}
+
+\usepackage[landscape, top=0.3cm, bottom=0.3cm, left=0.3cm, right=0.3cm]{geometry}
+\usepackage{multicol}
+
+% 2. 字体编码和基础数学包
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{derivative}
+\usepackage{upgreek}
+\usepackage[condensed,math]{iwona}
+\def\Ftrans{\raisebox{4pt}{$\xleftrightarrow{\mathcal{F}}$}}
+\def\FTrans{\xleftrightarrow{\mathcal{F}}}
+\def\Ltrans{\raisebox{4pt}{$\xleftrightarrow{\mathcal{L}}$}}
+\usepackage{enumitem}
+\setlist[itemize,2]{label=\fontsize{3pt}{3.5pt}\selectfont$\square$}
+\usepackage{tikz}
+\usetikzlibrary{positioning, calc}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\columnsep}{3pt}
+\usepackage{xcolor}
+\usepackage{soul}
+
+% Set the highlight color to a bright yellow
+\sethlcolor{yellow} 
+
+% Save the original \emph command just in case
+\let\oldemph\emph 
+
+% Redefine \emph to use the soul highlight command
+% (Optional: Add \textit{#1} inside \hl if you want to keep the italics as well)
+\renewcommand{\emph}[1]{\hl{#1}}
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=0.4em, labelsep=0.2em} 
+
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{card}[1]{
+	enhanced,
+	sharp corners,
+	breakable,
+	colback=white,
+	colbacktitle=gray!10,
+	coltitle=black,
+	fonttitle=\bfseries\fontseries{bc}\selectfont\scriptsize, 
+	title={#1},
+	frame style={
+		draw=black!70,
+		line width=0.5pt,
+		dashed,
+		dash pattern=on 2pt off 1pt
+	},
+	left=1pt, right=1pt, top=1pt, bottom=1pt,
+	toptitle=1pt, bottomtitle=1pt,
+	boxrule=0pt,
+	before skip=0pt,
+	after skip=0pt,
+	parbox=false,
+}
+
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily\fontsize{6pt}{6pt}\selectfont,
+	breaklines=true,
+	frame=none,
+	aboveskip=0pt, belowskip=0pt
+}
+
+% -----------------------------------------------------------------------
+% 正文
+% -----------------------------------------------------------------------
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand*{\oo}[1]{\left(#1\right)}
+\newcommand*{\oc}[1]{\left(#1\right]}
+\newcommand*{\cc}[1]{\left[#1\right]}
+\newcommand*{\co}[1]{\left[#1\right)}
+\newcommand{\C}[2]{\mathrm{C}_{#1}^{#2}}
+\newcommand{\PP}{\mathbf{P}}
+\newcommand{\EE}{\mathbf{E}}
+\newcommand{\var}{\operatorname{var}}
+\newcommand{\cov}{\operatorname{cov}}
+\begin{document}
+	
+	\fontsize{7pt}{8pt}\selectfont 
+
+	
+	\begin{multicols*}{4}
+		\begin{card}{Combination Numbers}
+			\begin{itemize}
+				\item Pascal's Rule: $\C{n}{k}=\C{n-1}{k}+\C{n-1}{k-1}$.
+				\item \emph{Absorption Identity: $k\C{n}{k}=n\C{n-1}{k-1}$.}
+				\item Trinomial Revision: $\C{n}{m}\C{m}{k}=\C{n}{k}\C{n-k}{m-k}$.
+				\item Row Sum: $\sum_{k=0}^{n}\C{n}{k}=2^n$.
+				\item Even-Odd Sums: $\sum_{k\ge 0} \C{n}{2k}=\sum_{k\ge 0}\C{n}{2k+1}=2^{n-1}$.
+				\item Weighted Sums:
+				\begin{itemize} 
+					\item $\sum_{k=0}^{n}k\C{n}{k}=n2^{n-1}$.
+				\item $\sum_{k=0}^{n}k^2\C{n}{k}=n(n+1)2^{n-2}$.
+				\item  $\sum_{k=0}^{n}k^3\C{n}{k}=n^2(n+3)2^{n-3}$.
+				\item  $\sum_{k=0}^m(-1)^k\C{n}{k}=(-1)^m\C{n-1}{m}$.
+				\end{itemize}
+				\item Hockey-Stick Identity: $\sum_{i=k}^n\C{i}{k}=\C{n+1}{k+1}$.
+				\item Diagonal Sum: $\sum_{k=0}^m \C{n+k}{k}=\C{n+m+1}{m}$.
+				\item Vandermonde's Identity: $\sum_{k=0}^r \C{n}{k}\C{m}{r-k}=\C{n+m}{r}$.
+			\end{itemize}
+		\end{card}
+		\begin{card}{Probability Space}
+			\begin{itemize}
+				\item \textbf{Sample Space $\Omega$}: the set of all possible outcomes.
+				\item \textbf{$\upsigma$-algebra}: the collection of events.
+				\begin{itemize}
+					\item $\emptyset\in\mathcal F$,
+					\item If $A\in\mathcal F$, then $A^\complement\in \mathcal F$,
+					\item If $A_i\in\mathcal F$, then $\bigcup_i A_i\in\mathcal F$.
+				\end{itemize}
+				\item \textbf{Borel field}: all intervals and countable union of them.
+				\item \textbf{Probability Measure $\PP$}: a function $\PP \colon \mathcal F\to [0,1]$.
+				\begin{itemize}
+					\item Nonnegativity: $\PP(A)\ge 0,\forall A\in\mathcal F$,
+					\item Normalization: $\PP(\emptyset)=0,\PP(\Omega)=1$,
+					\item Countable additivity: If $A_i\in\mathcal F$ are \textit{disjoint}, $\PP\left(\bigcup_i A_i\right)=\sum_i\PP(A_i)$.
+				\end{itemize}
+			\end{itemize}
+		\end{card}
+		\begin{card}{Conditioning and Independence}
+			\makebox[0.9\textwidth][l]{\textbf{\textit{Conditioning}}\hrulefill}
+			\begin{itemize}
+				\item \textbf{Definition}: For $\PP(B)\neq 0$, $\PP(A|B)=\PP(A\cap B)/\PP(B)$.
+				\begin{itemize}
+					\item Nonnegativity: $\PP(A|B)\ge 0,\forall A\in\mathcal F$,
+					\item Normalization: $\PP(\Omega|B)=1$,
+					\item Countable additivity: If $A_i\in\mathcal F$ are \textit{disjoint}, $\PP\left(\bigcup_i A_i|B\right)=\sum_i\PP(A_i|B)$.
+				\end{itemize}
+				\item \textbf{Multiplication Rule}: $\PP(A\cap B\cap C)=\PP(A)\cdot\PP(B|A)\cdot\PP(C|A\cap B)$.
+				\item \textbf{Total Probability Theorem}: For a partition of sample space $A_1, A_2,\dots, A_n$, assuming $\PP(A_i)>0$ for all $i$,
+				\[
+				\PP(B)=\sum_{i=1}^n \PP(A_i)\PP(B|A_i).
+				\]
+				\item \textbf{Bayes's Rule}: $\PP(A_i|B)=\dfrac{\PP(A_i)\PP(B|A_i)}{\sum_{j=1}^n\PP(A_j)\PP(B|A_j)}$.
+			\end{itemize}
+			\makebox[0.9\textwidth][l]{\textbf{\textit{Independence}}\hrulefill}
+			\begin{itemize}
+			\item \textbf{Definition}: Event $A$ and $B$ are called \textbf{independent} if $\PP(A\cap B)=\PP(A)\PP(B)$.
+			\item For $\PP(B)>0$, $\PP(A|B)=\PP(A)$.
+			\item \textbf{Conditional Independence}: $\PP(A\cap B|C)=\PP(A|C)\PP(B|C)$.
+			\item \textbf{Collective Independence}: Events $A_1,A_2,\dots, A_n$ are called independent if
+			\[
+			\PP(A_i\cap A_j\cap \dots\cap A_q)=\PP(A_i)\PP(A_j)\dots\PP(A_q),
+			\]
+			for any distinct indices $i,j,\dots,q$ chosen from $\left\{1,2,\dots,n\right\}$.
+			\item \emph{\textbf{Inclusion-Exclusion Principle}:}
+			$\PP\left(\bigcup_{i=1}^n A_i\right) = \sum \PP(A_i) - \sum_{i<j} \PP(A_i \cap A_j) + \dots + (-1)^{n-1} \PP(A_1 \cap \dots \cap A_n)$.
+			\begin{itemize}
+				\item \textbf{Hat Problem (Derangement)}: 
+				\begin{itemize}
+					\item Derangement Number:\\ $D_n=n!\sum_{i=0}^n(-1)^i/i!$.\\
+					$D_n=nD_{n-1}+(-1)^n$.\\
+					$\lim_{n\to\infty} D_n/n!=1/\e$.
+					\item Prob. of at least one match is $\approx 1 - 1/\e$ as $n\to\infty$.
+				\end{itemize}
+				\item \textbf{Symmetric Difference}: $\PP(A \triangle B) = \PP(A) + \PP(B) - 2\PP(A \cap B)$.
+			\end{itemize}
+			\end{itemize}
+		\end{card}
+		\begin{card}{Discrete Random Variable}
+			\begin{itemize}
+				\item \textbf{Random Variable}: Given a probability space $(\Omega,\mathcal F,\PP)$, a \textbf{random variable} is a \textit{function} $X\colon \Omega\to \mathbb R$ such that $X^{-1}(A)\in\mathcal F$ for each $A\in\mathcal B(\mathbb R)$.
+				\item \textbf{PMF}:\\ $p_X(x)=\PP(X=x)$.
+				\item \textbf{Derived PMF}: $Y=g(X)\Rightarrow p_Y(y)=\sum_{x:g(x)=y}p_X(x)$.
+				\item \textbf{Expectation}:\\ $\EE[X]=\sum_ix_ip_X(x_i)$.
+				\item \textbf{Variance}:\\ $\var[X]=\EE\left[\left(X-\EE[X]\right)^2\right]=\EE[X^2]-\left(\EE[X]\right)^2$.
+				\item \emph{$\EE[\alpha X+ \beta]=\alpha\EE[X]+\beta,\EE[X+Y]=\EE[X]+\EE[Y].$}
+				\item $\var[\alpha X+\beta]=\alpha^2\var[X]$.
+				\item \begin{itemize}
+					\item \textbf{Geometric RV}:
+					\begin{itemize}
+						\item $p_X(k)=(1-p)^{k-1}p$,
+						\item $\EE[X]=1/p$,
+						\item $\EE[X^2]=(2-p)/p^2$,
+						\item $\var[X]=(1-p)/p^2$.
+						\item \emph{\textbf{Memorylessness}:}\\ $p_X(k|X>n)=(1-p)^{k-n-1}p;\EE[X|X > n]=1/p + n$.
+					\end{itemize}
+					\item \textbf{Bernoulli RV}:
+					\begin{itemize}
+						\item $p_X(k)=\begin{cases}p,&k=1,\\1-p,&k=0,\end{cases}$,
+						\item $\EE[X]=p$,
+						\item $\EE[X^2]=p$,
+						\item $\var[X]=p(1-p)$.
+					\end{itemize}
+					\item \textbf{Discrete Uniform RV}:
+					\begin{itemize}
+						\item $p_X(k)=1/(b-a+1)$, if $k=a,a+1,\dots,b$,
+						\item $\EE[X]=(a+b)/2$,
+						\item $\var[X]=(b-a)(b-a+2)/12$.
+					\end{itemize}
+					\item \textbf{Binomial RV}:
+					\begin{itemize}
+						\item $p_X(k)=\C{n}{k}p^k(1-p)^{n-k}$,
+						\item $\EE[X]=np$,
+						\item $\EE[X^2]=np(1-p+np)$,
+						\item $\var[X]=np(1-p)$.
+					\end{itemize}
+					\item \textbf{Poisson RV}: \emph{$\lambda=np$ as $n\to\infty$ in binomial RV.}
+					\begin{itemize}
+						\item $p_X(k)=\e^{-\lambda}\lambda^k/k!,k=0,1,\dots$,
+						\item $\EE[X]=\lambda$,
+						\item $\EE[X^2]=\lambda+\lambda^2$,
+						\item $\var[X]=\lambda$,
+						\item \emph{$X_1+X_2\sim\text{Poisson}(\lambda_1+\lambda_2)$.}
+					\end{itemize}
+				\end{itemize}
+				\end{itemize}
+			\end{card}
+			\begin{card}{Multiple Discrete RV}
+				\begin{itemize}
+					\item \textbf{Conditioning}:
+					\begin{itemize}
+						\item \textbf{Conditional PMF}:\\ $p_{X|A}(x)=\PP(\{X=x\}\cap A)/\PP(A),p_{X|Y}(x|y)=p_{X,Y}(x,y)/p_Y(y)$.
+						\item \textbf{Conditional Expectation}:\\ $\EE[X|A]=\sum_x xp_{X|A}(x)$.
+						\item \emph{\textbf{Total Expectation Theorem}:}\\ $\EE[X]=\PP(A_1)\EE[X|A_1]+\dots +\PP(A_n)\EE[X|A_n]$.
+						\item \textbf{Marginal PMF}:\\ $p_{X,Y}(x,y)=\sum_z p_{X,Y,Z}(x,y,z);p_X(x)=\sum_y p_{X,Y}(x,y)$.
+					\end{itemize}
+					\item \textbf{Independence}:\\ $\forall x,y\colon p_{X,Y}(x,y)=p_X(x)p_Y(y)$.
+					\item For Independent RVs:
+					\begin{itemize}
+						\item $f(X)$ and $g(Y)$ are also independent.
+						\item \emph{$\EE[XY]=\EE[X]\EE[Y]$.}
+						\item \emph{$\var(X+Y)=\var(X)+\var(Y), \var(X-Y)=\var(X)+\var(Y)$.}
+						\item \textbf{Convolution}: $W=X+Y\Rightarrow p_W(w)=\sum_xp_X(x)p_Y(w-x)$.
+					\end{itemize}
+					\item \textbf{Conditional Independence}:\\ $\forall x,y\colon p_{X,Y}(x,y|A)=p_X(x|A)p_Y(y|A)$.
+				\end{itemize}
+		\end{card}
+		\begin{card}{Continuous RV}
+			\begin{itemize}
+				\item \textbf{PDF}:\\ $\PP(a\le X\le b)=\int_a^bf_X(x)\,\mathrm dx$;\\
+				$\PP(x\le X\le x+\delta)\approx f_X(x)\delta$.
+				\item \textbf{Expectation}:\\ $\EE[X]=\int_{-\infty}^{+\infty} xf_X(x)\,\mathrm dx$.
+				\item \textbf{Variance}:\\ $\var(X)=\int_{-\infty}^{+\infty}\left(x-\EE[X]\right)^2f_X(x)\,\mathrm dx=\EE[X^2]-\left(\EE[X]\right)^2$.
+				\item \begin{itemize}
+					\item \textbf{Uniform RV}:
+					\begin{itemize}
+						\item $f_X(x)=1/(b-a),a\le x\le b$,
+						\item $\EE[X]=(a+b)/2$,
+						\item $\EE[X^2]=(a^2+ab+b^2)/3$,
+						\item $\var[X]=(b-a)^2/12$.
+					\end{itemize}
+					\item \textbf{Exponential RV}:
+					\begin{itemize}
+						\item $f_X(x)=\lambda\e^{-\lambda x},x\ge 0$,
+						\item $F_X(x)=1-\e^{-\lambda x},x\ge 0$.
+						\item $\EE[X]=1/\lambda$,
+						\item $\EE[X^2]=2/\lambda^2$,
+						\item $\var[X]=1/\lambda^2$.
+						\item \emph{$\PP(X_1<X_2)=\lambda_1/(\lambda_1+\lambda_2)$.}
+						\item Memorylessness:\\
+						$f_X(x|X>a)=\lambda \e^{-\lambda(x-a)}, \PP(X\ge c+x|X\ge c)=\PP(X\ge x)=\e^{-\lambda x};$\\$\EE[X|X>c]=1/\lambda+c$.
+					\end{itemize}
+					\item \textbf{Gaussian RV} ($X\sim N(\mu,\sigma^2)$):
+					\begin{itemize}
+						\item \[f_X(x)=\frac{1}{\sigma\sqrt{2\uppi}}\e^{-(x-\mu)^2/2\sigma^2},\]
+						\item $F_\Lambda(\lambda)=\varPhi(\lambda),\Lambda\sim N(0,1)$.
+						\item $\EE[X]=\mu$,
+						\item $\EE[X^2]=\mu^2+\sigma^2$,
+						\item $\EE[X^4]=3\sigma^4+6\sigma^2\mu^2+\mu^4$,
+						\item $\var[X]=\sigma^2$.
+						\item $Y=\alpha X+\beta\sim N(\alpha\mu+\beta,\alpha^2\sigma^2)$.
+					\end{itemize}
+				\end{itemize}
+				\item \textbf{CDF}:\begin{itemize}
+					\item $F_X(x)=\int_{-\infty}^{x_+} f_X(t)\,\mathrm dt$.
+					\item $F_X(x)$ discontinuous $\Rightarrow$ $X$ has discrete part.
+					\item $\PP(a<X\le b)=F_X(b)-F_X(a)$.
+					\item $\EE[X]=\int_0^{+\infty}(1-F_X(x))\,\mathrm dx-\int_{-\infty}^0F_X(x)\,\mathrm dx$.
+				\end{itemize}
+				\item \textbf{Derived PDF}:
+				\begin{itemize}
+					\item \textbf{CDF Method}: find $F_Y(y)=\PP(g(X)\le y)\Rightarrow f_Y(y)=F_Y'(y)$.
+					\item \textbf{Linear}: $Y=aX+b\Rightarrow f_Y(y)=\frac{1}{|a|}f_X\left(\frac{y-b}{a}\right)$.
+					\item \textbf{Monotone}: $y=g(x)\Leftrightarrow x=h(y)\Rightarrow f_Y(y)=f_X(h(y))|h'(y)|$.
+				\end{itemize}
+				
+				\item \emph{\textbf{Min and Max of i.i.d. RVs} ($X_1, \dots, X_n$):}
+				\begin{itemize}
+					\item \textbf{Max}: $Z = \max(X_i) \implies F_Z(z) = [F_X(z)]^n \implies f_Z(z) = n[F_X(z)]^{n-1} f_X(z)$.
+					\item \textbf{Min}: $W = \min(X_i) \implies F_W(w) = 1 - [1 - F_X(w)]^n$.
+					\item \textit{Shortcut}: If $X_i \sim \operatorname{Exp}(\lambda_i)$, then $\min(X_1, \dots, X_n) \sim \operatorname{Exp}(\sum \lambda_i)$.
+				\end{itemize}
+				
+				\item \textbf{2D Uniform \& Geometric Probability}:
+				\begin{itemize}
+					\item $f_{X,Y}(x,y) = 1/\text{Area}(S)$ for $(x,y) \in S$.
+					\item \textbf{Broken Stick / Triangle Inequality}: Break a line into 3 pieces. They form a triangle iff. all pieces are shorter than $1/2$. Prob. is $1/4$.
+				\end{itemize}
+			\end{itemize}
+		\end{card}
+		\begin{card}{Multiple Continuous RV}
+			\textbf{Conditioning}:
+			\begin{itemize}
+				\item \textbf{Conditional PDF}: $f_{X|Y}(x|y)=f_{X,Y}(x,y)/f_{Y}(y)$.
+				\item \textbf{Conditional Expectation}: $\EE[X|Y=y]=\int_{-\infty}^{+\infty}xf_{X|Y}(x|y)\,\mathrm dx$.
+				\item \emph{\textbf{Total Expectation Theorem}: $\EE[X]=\int_{-\infty}^{+\infty}\EE[X|Y=y]f_Y(y)\,\mathrm dy$.}
+				\item \textbf{Marginal PDF}: $f_X(x)=\int_{-\infty}^{+\infty} f_{X,Y}(x,y)\,\mathrm dy$.
+			\end{itemize}
+			\textbf{Independence}:
+			\begin{itemize}
+				\item $\forall x,y\colon f_{X,Y}(x,y)=f_X(x)f_Y(y)$.
+				\item For independent RVs:
+				\begin{itemize}
+					\item $f(X)$ and $g(Y)$ are also independent,
+					\item $\EE[XY]=\EE[X]\EE[Y]$,
+					\item $\var(X+Y)=\var(X)+\var(Y)$.
+					\item \textbf{Convolution}: If $X$ and $Y$ are independent and $Z=X+Y$, $f_Z(z)=(f_X\ast f_Y)(z)=\int_{-\infty}^{+\infty}f_X(x)f_Y(z-x)\,\mathrm dx$.
+					\item $X\sim N(\mu_X,\sigma_X^2),Y\sim N(\mu_Y,\sigma_Y^2)\Rightarrow X+Y\sim N(\mu_X+\mu_Y,\sigma_X^2+\sigma_Y^2)$.
+				\end{itemize}
+			\end{itemize}
+			\textbf{Joint / Multiple CDF}: $F_{X,Y}(x,y) = \PP(X \le x, Y \le y)$.
+			\begin{itemize}
+				\item \textbf{Marginals}: $F_X(x) = F_{X,Y}(x, \infty)$, $F_Y(y) = F_{X,Y}(\infty, y)$.
+				\item \textbf{From/To PDF}:\\$F_{X,Y}(x,y) = \int_{-\infty}^{x} \int_{-\infty}^{y} f_{X,Y}(u,v)\,\mathrm dv\,\mathrm du $\\$\implies f_{X,Y}(x,y) = \frac{\partial^2}{\partial x \partial y} F_{X,Y}(x,y)$.
+				\item \textbf{Independence}: $X \perp Y \iff F_{X,Y}(x,y) = F_X(x)F_Y(y)$.
+			\end{itemize}
+			
+			\textbf{Conditional CDF}: 
+			\begin{itemize}
+				\item \textbf{Given Event $A$}: $F_{X|A}(x) = \PP(X \le x \mid A) = \frac{\PP(\{X \le x\} \cap A)}{\PP(A)}$.
+				\item \textbf{Given $Y=y$}: $F_{X|Y}(x|y) = \int_{-\infty}^{x} f_{X|Y}(t|y) \,\mathrm dt$.
+				\item \textbf{Derivative}: $f_{X|Y}(x|y) = \frac{\partial}{\partial x} F_{X|Y}(x|y)$.
+				\item \textbf{Total Prob}: $F_X(x) = \sum \PP(A_i) F_{X|A_i}(x)$.
+			\end{itemize}
+			\textbf{Continuous Bayes' Rule}:
+			\[
+			f_{X | Y}(x | y)=\frac{f_{Y | X}(y | x) f_X(x)}{f_Y(y)}=\frac{f_{Y | X}(y | x) f_X(x)}{\int_{-\infty}^{\infty} f_{Y | X}(y | t) f_X(t) d t},
+			\]
+			\[\PP(A|Y=y) = \frac{\PP(A) f_{Y|A}(y)}{f_Y(y)}. (\text{Mixed Bayes})\]
+		\end{card}
+		\begin{card}{Covariance and Correlation}
+			\begin{itemize}
+				\item \textbf{Covariance}: $\cov(X,Y)=\EE[(X-\EE[X])(Y-\EE[Y])]=\EE[XY]-\EE[X]\EE[Y]$.
+				\item \textbf{Uncorrelated}: $\cov(X,Y)=0$; independent $\Rightarrow\cov(X,Y)=0$.
+				\item $\cov(X,X)=\var(X)$; $\cov(X,aY+b)=a\cov(X,Y)$; $\cov(X,Y+Z)=\cov(X,Y)+\cov(X,Z)$.
+				\item $\var(X+Y)=\var(X)+\var(Y)+2\cov(X,Y)$.
+				\item $\var(\sum_iX_i)=\sum_i\var(X_i)+\sum_{i\neq j}\cov(X_i,X_j)$.
+				\item \textbf{Correlation}: $\rho(X,Y)=\dfrac{\cov(X,Y)}{\sqrt{\var(X)\var(Y)}}$, $-1\le\rho\le1$.
+				\item $|\rho|=1\Leftrightarrow X-\EE[X]=c(Y-\EE[Y])$.
+			\end{itemize}
+		\end{card}
+		\begin{card}{Conditional Expectation}
+			\begin{itemize}
+				\item \textbf{Iterated Expectation}: $\EE[X]=\EE[\EE[X|Y]]$.
+				\begin{itemize}
+					\item $Y$ discrete: $\EE[\EE[X|Y]]=\sum_y\EE[X|Y=y]p_Y(y)$.
+					\item $Y$ continuous: $\EE[\EE[X|Y]]=\int\EE[X|Y=y]f_Y(y)\,\mathrm dy$.
+				\end{itemize}
+				\item \textbf{Estimator}: $\hat X=\EE[X|Y]$, $\tilde X=X-\hat X$.
+				\item $\EE[\tilde X|Y]=0\Rightarrow\EE[\tilde X]=0$; $\cov(\hat X,\tilde X)=0$.
+				\item \textbf{Conditional Variance}: $\var(X|Y)=\EE[(X-\EE[X|Y])^2|Y]$.
+				\item \textbf{Total Variance}: $\var(X)=\var(\EE[X|Y])+\EE[\var(X|Y)]$.
+			\end{itemize}
+		\end{card}
+		\begin{card}{Transforms}
+			\begin{itemize}
+				\item \textbf{Definition}: $\mathscr{M}_X(s)=\EE[\e^{sX}]$;\\ discrete $\sum_xp_X(x)\e^{sx}$; continuous $\int f_X(x)\e^{sx}\,\mathrm dx$.
+				\item $\mathscr{M}_X(0)=1$; $\EE[X^n]=\left.\odv[n]{\mathscr{M}_X(s)}{s}\right|_{s=0}$.
+				\item $Y=aX+b\Rightarrow\mathscr{M}_Y(s)=\e^{bs}\mathscr{M}_X(as)$.
+				\item Independent $Z=\sum_{i=1}^nX_i\Rightarrow\mathscr{M}_Z(s)=\prod_i\mathscr{M}_{X_i}(s)$.
+				\item \textbf{Mixture}: $f_Y=\sum_ip_if_{X_i}\Rightarrow\mathscr{M}_Y(s)=\sum_ip_i\mathscr{M}_{X_i}(s)$.
+				\item \textbf{Random Sum}: $Y=X_1+\cdots+X_N$, i.i.d. $X_i\perp N$:
+				\begin{itemize}
+					\item $\EE[Y]=\EE[N]\EE[X]$,
+					\item $\var(Y)=\EE[N]\var(X)+(\EE[X])^2\var(N)$,
+					\item $\mathscr{M}_Y(s)=\mathscr{M}_N(\ln\mathscr{M}_X(s))$.
+				\end{itemize}
+				\item \textbf{Common $\mathscr{M}_X(s)$}:
+				\begin{itemize}
+					\item Bernoulli: $1-p+p\e^s$; Binomial: $(1-p+p\e^s)^n$,
+					\item Geometric: $\dfrac{p\e^s}{1-(1-p)\e^s}$; Poisson: $\exp(\lambda(\e^s-1))$,
+					\item Discrete uniform $\{a,\dots,b\}$: $\dfrac{\e^{as}(1-\e^{(b-a+1)s})}{(b-a+1)(1-\e^s)}$,
+					\item Uniform $[a,b]$: $\dfrac{\e^{bs}-\e^{as}}{(b-a)s}$; Exponential: $\dfrac{\lambda}{\lambda-s}$,
+					\item Gaussian $N(\mu,\sigma^2)$: $\exp(\mu s+\sigma^2s^2/2)$.
+				\end{itemize}
+			\end{itemize}
+		\end{card}
+		\begin{card}{Probability Inequalities}
+			\begin{itemize}
+				\item \textbf{Markov}: $X\ge0,a>0\Rightarrow \PP(X\ge a)\le \EE[X]/a$.
+				\begin{itemize}
+					\item ``$=$'' iff $X\in\{0,a\}$.
+				\end{itemize}
+				\item \textbf{Chebyshev}: $\PP(|X-\EE[X]|\ge c)\le \var(X)/c^2$.
+				\begin{itemize}
+					\item ``$=$'' iff $X\in\{\mu-c,\mu,\mu+c\}$, $\PP(X=\mu\pm c)=\sigma^2/(2c^2)$.
+				\end{itemize}
+				\item \textbf{Variance Bound}: $X\in[a,b]\Rightarrow\var(X)\le(b-a)^2/4$.
+				\begin{itemize}
+					\item ``$=$'' iff $\PP(X=a)=\PP(X=b)=1/2$.
+				\end{itemize}
+				\item \textbf{Chernoff}:
+				\begin{itemize}
+					\item Right-tail: $\PP(X\ge a)\le \inf_{s\ge0}\e^{-sa}\mathscr{M}_X(s)=\e^{-\sup_{s\ge0}(sa-\ln\mathscr{M}_X(s))}$,
+					\item Left-tail: $\PP(X\le a)\le \inf_{s\le0}\e^{-sa}\mathscr{M}_X(s)=\e^{-\sup_{s\le0}(sa-\ln\mathscr{M}_X(s))}$.
+				\end{itemize}
+			\end{itemize}
+		\end{card}
+		\begin{card}{LLN and CLT}
+			\begin{itemize}
+				\item \textbf{WLLN}: $M_n=\frac{1}{n}\sum_{i=1}^nX_i$, i.i.d., $\EE[X_i]=\mu$, $\var(X_i)=\sigma^2$.
+				\begin{itemize}
+					\item $\EE[M_n]=\mu$, $\var(M_n)=\sigma^2/n$,
+					\item $\PP(|M_n-\mu|\ge\epsilon)\le\sigma^2/(n\epsilon^2)\to0$,
+					\item $M_n\xrightarrow{\PP}\mu$.
+				\end{itemize}
+				\item \textbf{Convergence}:
+				\begin{itemize}
+					\item \textbf{In Probability}: $X_n\xrightarrow{\PP}X\Leftrightarrow \PP(|X_n-X|\ge\epsilon)\to0,\forall\epsilon>0$,
+					\item \textbf{In Distribution}: $X_n\xrightarrow{D}X\Leftrightarrow F_{X_n}(x)\to F_X(x)$ at continuous $x$,
+					\item \textbf{Almost Surely}: $X_n\xrightarrow{\mathrm{a.s.}}X\Leftrightarrow \PP(\lim_nX_n=X)=1$,
+					\begin{itemize}
+						\item ``Almost Surely'': For almost all sample paths $\omega$.
+					\end{itemize}
+					\item \textbf{$r$-th Mean}: $X_n\xrightarrow{r}X\Leftrightarrow \EE[|X_n-X|^r]\to0$,
+					\item \textbf{Relations}: a.s. $\Rightarrow \PP\Rightarrow D$; $r$-mean $\Rightarrow \PP\Rightarrow D$; $r\ge s\Rightarrow L^r\Rightarrow L^s$.
+				\end{itemize}
+				\item \textbf{CLT}: $S_n=\sum_{i=1}^nX_i$, i.i.d., $\EE[X_i]=\mu$, $\var(X_i)=\sigma^2$.
+				\item $Z_n=\dfrac{S_n-n\mu}{\sigma\sqrt n}\xrightarrow{D}N(0,1)$; $\PP(Z_n\le z)\to\varPhi(z)$.
+				\item \textbf{Transform}: $\mathscr{M}_{Z_n}(s)=\e^{-s\mu\sqrt n/\sigma}\left(\mathscr{M}_{X_1}\left(\frac{s}{\sigma\sqrt n}\right)\right)^n\to \e^{s^2/2}$.
+				\item \textbf{Normal Approx.}: $S_n\approx N(n\mu,n\sigma^2)$; $\PP(S_n\le c)\approx\varPhi\left(\dfrac{c-n\mu}{\sigma\sqrt n}\right)$.
+				\item \textbf{Binomial Approx.}: $X_i\sim\text{Bernoulli}(p)$, $S_n=\sum_iX_i\sim\operatorname{Bin}(n,p)$,\\ $q=1-p$.
+				\begin{itemize}
+					\item $\dfrac{S_n-np}{\sqrt{npq}}\approx N(0,1)$,
+					\item $\PP(k\le S_n\le l)\approx\varPhi\left(\dfrac{l+0.5-np}{\sqrt{npq}}\right)-\varPhi\left(\dfrac{k-0.5-np}{\sqrt{npq}}\right)$.
+				\end{itemize}
+				\item \textbf{SLLN}: $M_n=S_n/n\Rightarrow \PP(\lim_{n\to\infty}M_n=\mu)=1$, i.e. $M_n\xrightarrow{\mathrm{a.s.}}\mu$.
+			\end{itemize}
+		\end{card}
+		\begin{card}{\textcolor{blue}{Event Limits and Borel-Cantelli}}
+			{\color{blue}
+			\begin{itemize}
+				\item \textbf{Set Limits}:
+				\begin{itemize}
+					\item $\limsup A_n=\bigcap_{k\ge1}\bigcup_{n\ge k}A_n=\{A_n\text{ i.o.}\}$;
+					\begin{itemize}
+						\item ``infinite often''$=\forall N\ge 0, \exists n \ge N, A_n$ happens.
+					\end{itemize}
+					\item $\liminf A_n=\bigcup_{k\ge1}\bigcap_{n\ge k}A_n=\{A_n\text{ eventually}\}$.
+					\begin{itemize}
+						\item ``eventually''$=\exists N\ge 0, \forall n \ge N, A_n$ happens.
+					\end{itemize}
+					\item $\liminf A_n\subseteq\limsup A_n$; ``$=$'' $\Rightarrow\lim A_n$ exists. 
+				\end{itemize}
+				\item \textbf{Monotone Convergence Theorem}: $0\le X_n\uparrow X\Rightarrow\EE[X_n]\uparrow\EE[X]$; events $A_n\uparrow A\Rightarrow\PP(A_n)\uparrow\PP(A)$.
+				\begin{itemize}
+					\item Let $X_n=$ the sum of an RV seq. $\left\{Y_i\right\}$, $Y_i\ge 0$, $X=\lim_n X_n$,\\$\EE[X]<\infty\Rightarrow\mathbf P(X=\infty)=0\Rightarrow X$ converge a.s..
+					\item $X=\sum_{i=1}^\infty Y_i$ converges a.s. $\Rightarrow$ $\left\{Y_i\right\}\xrightarrow{\mathrm{a.s.}}0$.
+				\end{itemize}
+				\item \textbf{Borel-Cantelli I}: $\sum_n\PP(A_n)<\infty\Rightarrow\PP(A_n\text{ i.o.})=0$;
+				\item \textbf{Borel-Cantelli II}: independent $A_n$, $\sum_n\PP(A_n)=\infty\Rightarrow\PP(A_n\text{ i.o.})=1$.
+				\item \textbf{a.s. Criterion}: $X_n\xrightarrow{\mathrm{a.s.}}X\Leftrightarrow\forall\epsilon>0,\ \PP(|X_n-X|>\epsilon\text{ i.o.})=0$.
+				\begin{itemize}
+					\item Equiv.: $\lim_{n\to\infty}\PP(\sup_{k\ge n}|X_k-X|>\epsilon)=0,\ \forall\epsilon>0$,
+					\item Enough: $\forall m\ge1,\sum_n\PP(|X_n-X|>1/m)<\infty$.
+				\end{itemize}
+				\item \textbf{Subsequence}: $X_n\xrightarrow{\PP}X\Rightarrow\exists n_k:X_{n_k}\xrightarrow{\mathrm{a.s.}}X$; 
+				\begin{itemize}
+					\item proof: choose $\PP(|X_{n_k}-X|>1/k)<2^{-k}$.
+				\end{itemize}
+				\item \textbf{Kolmogorov Ineq.}: independent RVs $X_i$, $\EE[X_i]=0$, $\var(X_i)<\infty$, $S_k=\sum_{i=1}^kX_i\Rightarrow \PP(\max_{k\le n}|S_k|\ge a)\le\var(S_n)/a^2=\sum_{i=1}^n \var(X_i)/a^2$.
+				\item \textbf{Cantelli SLLN}: i.i.d., $\EE[X^4]<\infty\Rightarrow \EE[(\sum_{i=1}^n(X_i-\mu))^4]=O(n^2)$;\\Borel-Cantelli I $\Rightarrow S_n/n\xrightarrow{\mathrm{a.s.}}\mu$.
+				\item $\limsup A_n$ is event; $\limsup\PP(A_n)$ is number;\\$\PP(\limsup A_n)\ge\limsup\PP(A_n)$.
+			\end{itemize}
+			}
+		\end{card}
+		\begin{card}{Stochastic Processes}
+			\begin{itemize}
+				\item \textbf{Stochastic Process}: A collection of RVs indexed by time.
+				\begin{itemize}
+					\item \textbf{View as a mapping}: $Z\colon T\times \Omega \to \mathbb{R}; \left(t, \omega\right)\mapsto Z_t(\omega)$.
+					\item \textbf{View as a sequence}:
+					$\left\{Z_{t_1}, Z_{t_2}, \dots\right\}$, $t_1, t_2\in T$ is a sequence of time-relavent RVs defined on prob. space $\left(\Omega, \mathcal F, \mathbf P\right)$.
+					\item Once the sample path $\omega$ is fixed, values of the whole RV walk $\left\{Z_{t_1}(\omega), Z_{t_2}(\omega), \dots\right\}$ are fixed.
+				\end{itemize}
+				\item \textbf{Bernoulli Process}: discrete-time discrete-value SP $\{X_i\}_{i\ge1}$;\\$X_i\sim$ i.i.d. Bernoulli($p$).
+				\begin{itemize}
+					\item \textbf{Intuition}: keep tossing a coin and record if $i$-th round is a head as $X_i$.
+					\item \textbf{Independence}: seq. $X_{n+1}, X_{n+2}, \dots$ after $n$ is a Bernoulli SP independent of $X_1,\dots,X_n$,
+					\item \textbf{Memoryless}: $W_n=$ trials from $n$ to next success $\sim\operatorname{Geo}(p)$,
+					\item \textbf{Interarrival}: $Y_k=$ time of $k$-th success, $T_1=Y_1$, $T_k=Y_k-Y_{k-1}$;\\ $T_i\sim$ i.i.d. $\operatorname{Geo}(p)$; $Y_k=\sum_{i=1}^kT_i$,
+					\item \textbf{$k$-th success}: $Y_k\sim\operatorname{Pascal}(k,p)$,
+					\begin{itemize}
+						\item $p_{Y_k}(t)=\C{t-1}{k-1}p^k(1-p)^{t-k}$, $t=k,k+1,\dots$,
+						\item $\EE[Y_k]=k/p$, $\var(Y_k)=k(1-p)/p^2$,
+					\end{itemize}
+					\item \textbf{Splitting}: keep w.p. $q\Rightarrow$ Bernoulli SP($pq$),
+					\item \textbf{Merging Independent Bernoullis}:\\ Bernoulli($p$)+Bernoulli($q$)$\Rightarrow$ Bernoulli($p+q-pq$).
+				\end{itemize}
+				\item \textbf{Poisson Process}: continuous-time discrete-value SP $\{N_t\}_{t\ge0}$, $N_0=0$, $N_t\sim$ Poisson($\lambda t$); .
+				\begin{itemize}
+					\item \textbf{Intuition}: count the number of arrivals w.p. $\lambda\delta$ for a small interval $\delta$, from $0$ to $t$ as $N_t$. 
+					\item \textbf{Homogeneity}: $\mathbf P(k,t)=\mathbf P(\text{$k$ arrivals in interval of duration $t$})$\\$=\sum_{n=0}^\infty \mathbf P(N_{t+T}=n+k|N_T=n)\mathbf P(n,T)$
+					\item \textbf{Independent}: Numbers of arrivals in \textbf{disjoint} time intervals are independent.
+					\item \textbf{Small $\delta$}: $P(0,\delta)=1-\lambda\delta+o(\delta)$, $P(1,\delta)=\lambda\delta+o(\delta)$, \\$P(k,\delta)=o(\delta),k>1$,
+					\item \textbf{Bernoulli Relation}: Select time infinitesimal $\delta$, $n=t/\delta$, $p=\lambda\delta$;\\
+					$\left\{X_i\right\}$ is a Bernoulli SP($p$), $S_n=\sum_{k=1}^n X_i \sim $ Binomial RV$(n,p)$ $\to N_t \sim$ Poisson RV $(\lambda t)$, $n\to\infty$,
+					\item \textbf{First Arrival}: $Y_1=T_1\sim\operatorname{Exp}(\lambda)$; $F_{Y_1}(t)=1-\e^{-\lambda t}$, $f_{Y_1}(t)=\lambda\e^{-\lambda t}$; 
+					\item \textbf{Interarrival}: $Y_k=$ time of $k$th arrival, $T_1=Y_1$, $T_k=Y_k-Y_{k-1}$;\\$T_i\sim$ i.i.d. $\operatorname{Exp}(\lambda)$, $Y_k=\sum_{i=1}^kT_i$,
+					\item \textbf{$k$-th arrival}: $Y_k\sim \operatorname{Erlang}(\lambda, k)$,
+					\begin{itemize}
+						\item $f_{Y_k}(y)=\lambda^ky^{k-1}\e^{-\lambda y}/(k-1)!$, $y\ge0$;
+						\item $\EE[Y_k]=k/\lambda$, $\var(Y_k)=k/\lambda^2$,
+					\end{itemize}
+					\item \textbf{Splitting}: keep w.p. $p\Rightarrow\operatorname{Poisson}(\lambda p)$,
+					\item \textbf{Merging Independent Poissons}: $\operatorname{Poisson}(\lambda_1)+\operatorname{Poisson}(\lambda_2)=\operatorname{Poisson}(\lambda_1+\lambda_2)$;\\next arrival from SP 1 w.p. $\lambda_1/(\lambda_1+\lambda_2)$.
+				\end{itemize}
+				\item \textbf{Random Sum}: $Y=\sum_{i=1}^NX_i$, $Y=0$ if $N=0$; $\mathscr{M}_Y(s)=\mathscr{M}_N(\ln\mathscr{M}_X(s))$.
+				\item \textbf{Random Sum Table}:
+				\begin{center}
+					\begin{tabular}{@{}lll@{}}
+						$X_i$ & $N$ & $Y$\\
+						Bernoulli($p$) & Binomial($m,q$) & Binomial($m,pq$)\\
+						Bernoulli($p$) & Poisson($\lambda$) & Poisson($\lambda p$)\\
+						Geo($p$) & Geo($q$) & Geo($pq$)\\
+						Exponential($\lambda$) & Geo($q$) & Exponential($\lambda q$)
+					\end{tabular}
+				\end{center}
+			\end{itemize}
+		\end{card}
+		\begin{card}{Entropy}
+			\begin{itemize}
+				\item \textbf{Discrete}: $H(X)=\EE[-\ln p_X(X)]=-\sum_k p_X(x_k)\ln p_X(x_k)$.
+				\item \textbf{Continuous}: $h(X)=\EE[-\ln f_X(X)]=-\int f_X(x)\ln f_X(x)\,\mathrm dx$.
+				\item \textbf{Bernoulli}: $H(X)=-p\log_2p-(1-p)\log_2(1-p)$; max $1$ at $p=1/2$, min $0$ at $p=0,1$.
+				\item \textbf{Max Entropy}:
+				\begin{itemize}
+					\item finite $\{x_1,\dots,x_n\}\Rightarrow p_k=1/n$,
+					\item $[a,b]\Rightarrow U(a,b)$,
+					\item $[0,\infty),\EE[X]=1/\lambda\Rightarrow \operatorname{Exp}(\lambda)$,
+					\item $\mathbb R$, fixed $\mu,\sigma^2\Rightarrow N(\mu,\sigma^2)$.
+				\end{itemize}
+			\end{itemize}
+		\end{card}
+		\begin{card}{Integration Formula}
+			\begin{itemize}
+				\item $\int x\e^{ax}\,\mathrm dx=\frac{1}{a^2}(ax-1)\e^{ax},\int x^2\e^{ax}\,\mathrm dx=\frac{a^2x^2-2ax+2}{a^3}\e^{ax},\int x^3\e^{ax}\,\mathrm dx=\frac{a^3x^3-3a^2x^2+6ax-6}{a^4}\e^{ax},\int x^n\e^{ax}\,\mathrm dx=\frac{1}{a}x^n\e^{ax}-\frac{n}{a}\int x^{n-1}\e^{ax}\,\mathrm dx.$
+				\item $\int_0^{\infty}x^n\e^{-ax}\,\mathrm dx=n!/a^{n+1}.$
+				\item $\int\sqrt{a^2-x^2}\,\mathrm dx=\frac{x}{2}\sqrt{a^2-x^2}+\frac{a^2}{2}\arcsin\frac{x}{a}.$
+				\item $\int \ln x\,\mathrm dx=x\ln x-x,\int x^n\ln x\,\mathrm dx=\frac{1}{n+1}x^{n+1}\left(\ln x-\frac{1}{n+1}\right).$
+				\item $\int x\exp\left(-x^2/\sigma^2\right)\,\mathrm dx=-\frac{\sigma^2}{2}\exp\left(-x^2/\sigma^2\right)+C.$
+				\item $\int_{-\infty}^{+\infty} \exp\left(-(x-\lambda)^2/\mu^2\right)\,\mathrm dx=\mu\sqrt{\uppi}$.
+				\item $\int_{-\infty}^{+\infty}x^2\exp\left(-x^2/\mu^2\right)\,\mathrm dx=\frac{\mu^3}{2}\sqrt{\uppi}.$
+			\end{itemize}
+		\end{card}
+	\end{multicols*}
+\end{document}
