@@ -1,4 +1,8 @@
-# Probability End-Term Cheatsheet
+# Cheatsheets
+
+Cheatsheets for exams and LaTeX templates for building compact, efficient reference sheets.
+
+## Probability End-Term Cheatsheet
 
 Compact LaTeX cheatsheet for the Probability part of **Probability & Stochastic Processes (1)**.
 Most of the formulas and definitions are derived from Prof. Shen's lecture slides, with additional notes added during revision.
@@ -8,6 +12,7 @@ Most of the formulas and definitions are derived from Prof. Shen's lecture slide
 - `cheatsheet.tex`: main cheatsheet content.
 - `probability-cheatsheet.sty`: reusable LaTeX template for dense multi-column math cheatsheets.
 - `cheatsheet.pdf`: compiled preview.
+- `LICENSE`: MIT license for the repository.
 
 ## Build
 
