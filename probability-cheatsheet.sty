@@ -1,0 +1,84 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{probability-cheatsheet}[2026/06/04 Compact math cheatsheet template]
+
+\RequirePackage[landscape,top=0.3cm,bottom=0.3cm,left=0.3cm,right=0.3cm]{geometry}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{amsmath,amsthm,amsfonts,amssymb}
+\RequirePackage{mathrsfs}
+\RequirePackage{mathtools}
+\RequirePackage{derivative}
+\RequirePackage{upgreek}
+\RequirePackage[condensed,math]{iwona}
+\RequirePackage{multicol}
+\RequirePackage{enumitem}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,calc}
+\RequirePackage{xcolor}
+\RequirePackage{soul}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{listings}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\columnsep}{3pt}
+
+\sethlcolor{yellow}
+\let\cheatsheetoldemph\emph
+\renewcommand{\emph}[1]{\hl{#1}}
+
+\setlist{nosep,leftmargin=0.4em,labelsep=0.2em}
+\setlist[itemize,2]{label=\fontsize{3pt}{3.5pt}\selectfont$\square$}
+
+\newtcolorbox{card}[1]{
+  enhanced,
+  sharp corners,
+  breakable,
+  colback=white,
+  colbacktitle=gray!10,
+  coltitle=black,
+  fonttitle=\bfseries\fontseries{bc}\selectfont\scriptsize,
+  title={#1},
+  frame style={
+    draw=black!70,
+    line width=0.5pt,
+    dashed,
+    dash pattern=on 2pt off 1pt
+  },
+  left=1pt,right=1pt,top=1pt,bottom=1pt,
+  toptitle=1pt,bottomtitle=1pt,
+  boxrule=0pt,
+  before skip=0pt,
+  after skip=0pt,
+  parbox=false,
+}
+
+\lstset{
+  basicstyle=\ttfamily\fontsize{6pt}{6pt}\selectfont,
+  breaklines=true,
+  frame=none,
+  aboveskip=0pt,
+  belowskip=0pt
+}
+
+\newcommand{\cheatsheetbodyfont}{\fontsize{7pt}{8pt}\selectfont}
+\newenvironment{cheatsheetcolumns}[1][4]{%
+  \cheatsheetbodyfont
+  \begin{multicols*}{#1}%
+}{%
+  \end{multicols*}%
+}
+
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand*{\oo}[1]{\left(#1\right)}
+\newcommand*{\oc}[1]{\left(#1\right]}
+\newcommand*{\cc}[1]{\left[#1\right]}
+\newcommand*{\co}[1]{\left[#1\right)}
+\newcommand{\C}[2]{\mathrm{C}_{#1}^{#2}}
+\newcommand{\PP}{\mathbf{P}}
+\newcommand{\EE}{\mathbf{E}}
+\newcommand{\var}{\operatorname{var}}
+\newcommand{\cov}{\operatorname{cov}}
+\newcommand{\Ftrans}{\raisebox{4pt}{$\xleftrightarrow{\mathcal{F}}$}}
+\newcommand{\FTrans}{\xleftrightarrow{\mathcal{F}}}
+\newcommand{\Ltrans}{\raisebox{4pt}{$\xleftrightarrow{\mathcal{L}}$}}

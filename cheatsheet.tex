@@ -1,98 +1,13 @@
 \documentclass[landscape,a4paper]{article}
+\usepackage{probability-cheatsheet}
 
-\usepackage[landscape, top=0.3cm, bottom=0.3cm, left=0.3cm, right=0.3cm]{geometry}
-\usepackage{multicol}
-
-% 2. 字体编码和基础数学包
-\usepackage[T1]{fontenc}
-\usepackage{amsmath,amsthm,amsfonts,amssymb}
-\usepackage{mathrsfs}
-\usepackage{mathtools}
-\usepackage{derivative}
-\usepackage{upgreek}
-\usepackage[condensed,math]{iwona}
-\def\Ftrans{\raisebox{4pt}{$\xleftrightarrow{\mathcal{F}}$}}
-\def\FTrans{\xleftrightarrow{\mathcal{F}}}
-\def\Ltrans{\raisebox{4pt}{$\xleftrightarrow{\mathcal{L}}$}}
-\usepackage{enumitem}
-\setlist[itemize,2]{label=\fontsize{3pt}{3.5pt}\selectfont$\square$}
-\usepackage{tikz}
-\usetikzlibrary{positioning, calc}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt}
-\setlength{\columnsep}{3pt}
-\usepackage{xcolor}
-\usepackage{soul}
-
-% Set the highlight color to a bright yellow
-\sethlcolor{yellow} 
-
-% Save the original \emph command just in case
-\let\oldemph\emph 
-
-% Redefine \emph to use the soul highlight command
-% (Optional: Add \textit{#1} inside \hl if you want to keep the italics as well)
-\renewcommand{\emph}[1]{\hl{#1}}
-\usepackage{enumitem}
-\setlist{nosep, leftmargin=0.4em, labelsep=0.2em} 
-
-\usepackage[most]{tcolorbox}
-
-\newtcolorbox{card}[1]{
-	enhanced,
-	sharp corners,
-	breakable,
-	colback=white,
-	colbacktitle=gray!10,
-	coltitle=black,
-	fonttitle=\bfseries\fontseries{bc}\selectfont\scriptsize, 
-	title={#1},
-	frame style={
-		draw=black!70,
-		line width=0.5pt,
-		dashed,
-		dash pattern=on 2pt off 1pt
-	},
-	left=1pt, right=1pt, top=1pt, bottom=1pt,
-	toptitle=1pt, bottomtitle=1pt,
-	boxrule=0pt,
-	before skip=0pt,
-	after skip=0pt,
-	parbox=false,
-}
-
-\usepackage{listings}
-\lstset{
-	basicstyle=\ttfamily\fontsize{6pt}{6pt}\selectfont,
-	breaklines=true,
-	frame=none,
-	aboveskip=0pt, belowskip=0pt
-}
-
-% -----------------------------------------------------------------------
-% 正文
-% -----------------------------------------------------------------------
-\newcommand{\ii}{\mathrm{i}}
-\newcommand{\e}{\mathrm{e}}
-\newcommand*{\oo}[1]{\left(#1\right)}
-\newcommand*{\oc}[1]{\left(#1\right]}
-\newcommand*{\cc}[1]{\left[#1\right]}
-\newcommand*{\co}[1]{\left[#1\right)}
-\newcommand{\C}[2]{\mathrm{C}_{#1}^{#2}}
-\newcommand{\PP}{\mathbf{P}}
-\newcommand{\EE}{\mathbf{E}}
-\newcommand{\var}{\operatorname{var}}
-\newcommand{\cov}{\operatorname{cov}}
 \begin{document}
 	
-	\fontsize{7pt}{8pt}\selectfont 
-
-	
-	\begin{multicols*}{4}
+	\begin{cheatsheetcolumns}
 		\begin{card}{Combination Numbers}
 			\begin{itemize}
 				\item Pascal's Rule: $\C{n}{k}=\C{n-1}{k}+\C{n-1}{k-1}$.
-				\item \emph{Absorption Identity: $k\C{n}{k}=n\C{n-1}{k-1}$.}
+				\item Absorption Identity: $k\C{n}{k}=n\C{n-1}{k-1}$.
 				\item Trinomial Revision: $\C{n}{m}\C{m}{k}=\C{n}{k}\C{n-k}{m-k}$.
 				\item Row Sum: $\sum_{k=0}^{n}\C{n}{k}=2^n$.
 				\item Even-Odd Sums: $\sum_{k\ge 0} \C{n}{2k}=\sum_{k\ge 0}\C{n}{2k+1}=2^{n-1}$.
@@ -117,7 +32,7 @@
 					\item If $A\in\mathcal F$, then $A^\complement\in \mathcal F$,
 					\item If $A_i\in\mathcal F$, then $\bigcup_i A_i\in\mathcal F$.
 				\end{itemize}
-				\item \textbf{Borel field}: all intervals and countable union of them.
+				\item \textbf{Borel field}: all intervals and $\sigma$-algebra generated from them.
 				\item \textbf{Probability Measure $\PP$}: a function $\PP \colon \mathcal F\to [0,1]$.
 				\begin{itemize}
 					\item Nonnegativity: $\PP(A)\ge 0,\forall A\in\mathcal F$,
@@ -152,7 +67,7 @@
 			\PP(A_i\cap A_j\cap \dots\cap A_q)=\PP(A_i)\PP(A_j)\dots\PP(A_q),
 			\]
 			for any distinct indices $i,j,\dots,q$ chosen from $\left\{1,2,\dots,n\right\}$.
-			\item \emph{\textbf{Inclusion-Exclusion Principle}:}
+			\item \textbf{Inclusion-Exclusion Principle}:
 			$\PP\left(\bigcup_{i=1}^n A_i\right) = \sum \PP(A_i) - \sum_{i<j} \PP(A_i \cap A_j) + \dots + (-1)^{n-1} \PP(A_1 \cap \dots \cap A_n)$.
 			\begin{itemize}
 				\item \textbf{Hat Problem (Derangement)}: 
@@ -173,7 +88,7 @@
 				\item \textbf{Derived PMF}: $Y=g(X)\Rightarrow p_Y(y)=\sum_{x:g(x)=y}p_X(x)$.
 				\item \textbf{Expectation}:\\ $\EE[X]=\sum_ix_ip_X(x_i)$.
 				\item \textbf{Variance}:\\ $\var[X]=\EE\left[\left(X-\EE[X]\right)^2\right]=\EE[X^2]-\left(\EE[X]\right)^2$.
-				\item \emph{$\EE[\alpha X+ \beta]=\alpha\EE[X]+\beta,\EE[X+Y]=\EE[X]+\EE[Y].$}
+				\item $\EE[\alpha X+ \beta]=\alpha\EE[X]+\beta,\EE[X+Y]=\EE[X]+\EE[Y].$
 				\item $\var[\alpha X+\beta]=\alpha^2\var[X]$.
 				\item \begin{itemize}
 					\item \textbf{Geometric RV}:
@@ -182,7 +97,7 @@
 						\item $\EE[X]=1/p$,
 						\item $\EE[X^2]=(2-p)/p^2$,
 						\item $\var[X]=(1-p)/p^2$.
-						\item \emph{\textbf{Memorylessness}:}\\ $p_X(k|X>n)=(1-p)^{k-n-1}p;\EE[X|X > n]=1/p + n$.
+						\item \textbf{Memorylessness}:\\ $p_X(k|X>n)=(1-p)^{k-n-1}p;\EE[X|X > n]=1/p + n$.
 					\end{itemize}
 					\item \textbf{Bernoulli RV}:
 					\begin{itemize}
@@ -204,13 +119,13 @@
 						\item $\EE[X^2]=np(1-p+np)$,
 						\item $\var[X]=np(1-p)$.
 					\end{itemize}
-					\item \textbf{Poisson RV}: \emph{$\lambda=np$ as $n\to\infty$ in binomial RV.}
+					\item \textbf{Poisson RV}: $\lambda=np$ as $n\to\infty$ in binomial RV.
 					\begin{itemize}
 						\item $p_X(k)=\e^{-\lambda}\lambda^k/k!,k=0,1,\dots$,
 						\item $\EE[X]=\lambda$,
 						\item $\EE[X^2]=\lambda+\lambda^2$,
 						\item $\var[X]=\lambda$,
-						\item \emph{$X_1+X_2\sim\text{Poisson}(\lambda_1+\lambda_2)$.}
+						\item Independent sum: $X_1+X_2\sim\text{Poisson}(\lambda_1+\lambda_2)$.
 					\end{itemize}
 				\end{itemize}
 				\end{itemize}
@@ -221,15 +136,15 @@
 					\begin{itemize}
 						\item \textbf{Conditional PMF}:\\ $p_{X|A}(x)=\PP(\{X=x\}\cap A)/\PP(A),p_{X|Y}(x|y)=p_{X,Y}(x,y)/p_Y(y)$.
 						\item \textbf{Conditional Expectation}:\\ $\EE[X|A]=\sum_x xp_{X|A}(x)$.
-						\item \emph{\textbf{Total Expectation Theorem}:}\\ $\EE[X]=\PP(A_1)\EE[X|A_1]+\dots +\PP(A_n)\EE[X|A_n]$.
+						\item \textbf{Total Expectation Theorem}:\\ $\EE[X]=\PP(A_1)\EE[X|A_1]+\dots +\PP(A_n)\EE[X|A_n]$.
 						\item \textbf{Marginal PMF}:\\ $p_{X,Y}(x,y)=\sum_z p_{X,Y,Z}(x,y,z);p_X(x)=\sum_y p_{X,Y}(x,y)$.
 					\end{itemize}
 					\item \textbf{Independence}:\\ $\forall x,y\colon p_{X,Y}(x,y)=p_X(x)p_Y(y)$.
 					\item For Independent RVs:
 					\begin{itemize}
 						\item $f(X)$ and $g(Y)$ are also independent.
-						\item \emph{$\EE[XY]=\EE[X]\EE[Y]$.}
-						\item \emph{$\var(X+Y)=\var(X)+\var(Y), \var(X-Y)=\var(X)+\var(Y)$.}
+						\item $\EE[XY]=\EE[X]\EE[Y]$.
+						\item $\var(X+Y)=\var(X)+\var(Y), \var(X-Y)=\var(X)+\var(Y)$.
 						\item \textbf{Convolution}: $W=X+Y\Rightarrow p_W(w)=\sum_xp_X(x)p_Y(w-x)$.
 					\end{itemize}
 					\item \textbf{Conditional Independence}:\\ $\forall x,y\colon p_{X,Y}(x,y|A)=p_X(x|A)p_Y(y|A)$.
@@ -256,13 +171,13 @@
 						\item $\EE[X]=1/\lambda$,
 						\item $\EE[X^2]=2/\lambda^2$,
 						\item $\var[X]=1/\lambda^2$.
-						\item \emph{$\PP(X_1<X_2)=\lambda_1/(\lambda_1+\lambda_2)$.}
+						\item $\PP(X_1<X_2)=\lambda_1/(\lambda_1+\lambda_2)$.
 						\item Memorylessness:\\
 						$f_X(x|X>a)=\lambda \e^{-\lambda(x-a)}, \PP(X\ge c+x|X\ge c)=\PP(X\ge x)=\e^{-\lambda x};$\\$\EE[X|X>c]=1/\lambda+c$.
 					\end{itemize}
 					\item \textbf{Gaussian RV} ($X\sim N(\mu,\sigma^2)$):
 					\begin{itemize}
-						\item \[f_X(x)=\frac{1}{\sigma\sqrt{2\uppi}}\e^{-(x-\mu)^2/2\sigma^2},\]
+						\item \[f_X(x)=\frac{1}{\sigma\sqrt{2\uppi}}\e^{-(x-\mu)^2/(2\sigma^2)},\]
 						\item $F_\Lambda(\lambda)=\varPhi(\lambda),\Lambda\sim N(0,1)$.
 						\item $\EE[X]=\mu$,
 						\item $\EE[X^2]=\mu^2+\sigma^2$,
@@ -284,7 +199,7 @@
 					\item \textbf{Monotone}: $y=g(x)\Leftrightarrow x=h(y)\Rightarrow f_Y(y)=f_X(h(y))|h'(y)|$.
 				\end{itemize}
 				
-				\item \emph{\textbf{Min and Max of i.i.d. RVs} ($X_1, \dots, X_n$):}
+				\item \textbf{Min and Max of i.i.d. RVs} ($X_1, \dots, X_n$):
 				\begin{itemize}
 					\item \textbf{Max}: $Z = \max(X_i) \implies F_Z(z) = [F_X(z)]^n \implies f_Z(z) = n[F_X(z)]^{n-1} f_X(z)$.
 					\item \textbf{Min}: $W = \min(X_i) \implies F_W(w) = 1 - [1 - F_X(w)]^n$.
@@ -303,7 +218,7 @@
 			\begin{itemize}
 				\item \textbf{Conditional PDF}: $f_{X|Y}(x|y)=f_{X,Y}(x,y)/f_{Y}(y)$.
 				\item \textbf{Conditional Expectation}: $\EE[X|Y=y]=\int_{-\infty}^{+\infty}xf_{X|Y}(x|y)\,\mathrm dx$.
-				\item \emph{\textbf{Total Expectation Theorem}: $\EE[X]=\int_{-\infty}^{+\infty}\EE[X|Y=y]f_Y(y)\,\mathrm dy$.}
+				\item \textbf{Total Expectation Theorem}: $\EE[X]=\int_{-\infty}^{+\infty}\EE[X|Y=y]f_Y(y)\,\mathrm dy$.
 				\item \textbf{Marginal PDF}: $f_X(x)=\int_{-\infty}^{+\infty} f_{X,Y}(x,y)\,\mathrm dy$.
 			\end{itemize}
 			\textbf{Independence}:
@@ -365,6 +280,11 @@
 		\begin{card}{Transforms}
 			\begin{itemize}
 				\item \textbf{Definition}: $\mathscr{M}_X(s)=\EE[\e^{sX}]$;\\ discrete $\sum_xp_X(x)\e^{sx}$; continuous $\int f_X(x)\e^{sx}\,\mathrm dx$.
+				\item \textbf{Recover Law}: MGF exists near $0\Rightarrow$ unique distribution.
+				\begin{itemize}
+					\item Discrete: expand $\mathscr{M}_X(s)=\sum_xp_X(x)\e^{sx}$; coeff. of $\e^{sx}$ is $p_X(x)$;\\ or $p_X(x)=\mathcal Z^{-1}\{\mathscr{M}_X(-\ln z)\}$.
+					\item Continuous: $f_X(x)=\mathcal L_b^{-1}\{\mathscr{M}_X(-s)\}$;\\ or $f_X(x)=\mathcal F^{-1}\{\mathscr{M}_X(\ii t)\}=\frac1{2\uppi}\int\e^{-\ii tx}\mathscr{M}_X(\ii t)\,\mathrm dt$.
+				\end{itemize}
 				\item $\mathscr{M}_X(0)=1$; $\EE[X^n]=\left.\odv[n]{\mathscr{M}_X(s)}{s}\right|_{s=0}$.
 				\item $Y=aX+b\Rightarrow\mathscr{M}_Y(s)=\e^{bs}\mathscr{M}_X(as)$.
 				\item Independent $Z=\sum_{i=1}^nX_i\Rightarrow\mathscr{M}_Z(s)=\prod_i\mathscr{M}_{X_i}(s)$.
@@ -437,8 +357,7 @@
 				\item \textbf{SLLN}: $M_n=S_n/n\Rightarrow \PP(\lim_{n\to\infty}M_n=\mu)=1$, i.e. $M_n\xrightarrow{\mathrm{a.s.}}\mu$.
 			\end{itemize}
 		\end{card}
-		\begin{card}{\textcolor{blue}{Event Limits and Borel-Cantelli}}
-			{\color{blue}
+		\begin{card}{Event Limits and Borel-Cantelli}
 			\begin{itemize}
 				\item \textbf{Set Limits}:
 				\begin{itemize}
@@ -472,7 +391,6 @@
 				\item \textbf{Cantelli SLLN}: i.i.d., $\EE[X^4]<\infty\Rightarrow \EE[(\sum_{i=1}^n(X_i-\mu))^4]=O(n^2)$;\\Borel-Cantelli I $\Rightarrow S_n/n\xrightarrow{\mathrm{a.s.}}\mu$.
 				\item $\limsup A_n$ is event; $\limsup\PP(A_n)$ is number;\\$\PP(\limsup A_n)\ge\limsup\PP(A_n)$.
 			\end{itemize}
-			}
 		\end{card}
 		\begin{card}{Stochastic Processes}
 			\begin{itemize}
@@ -495,7 +413,7 @@
 						\item $\EE[Y_k]=k/p$, $\var(Y_k)=k(1-p)/p^2$,
 					\end{itemize}
 					\item \textbf{Splitting}: keep w.p. $q\Rightarrow$ Bernoulli SP($pq$),
-					\item \textbf{Merging Independent Bernoullis}:\\ Bernoulli($p$)+Bernoulli($q$)$\Rightarrow$ Bernoulli($p+q-pq$).
+					\item \textbf{Merging Independent Bernoullis}:\\ Bernoulli($p$) OR Bernoulli($q$)$\Rightarrow$ Bernoulli($p+q-pq$).
 				\end{itemize}
 				\item \textbf{Poisson Process}: continuous-time discrete-value SP $\{N_t\}_{t\ge0}$, $N_0=0$, $N_t\sim$ Poisson($\lambda t$); .
 				\begin{itemize}
@@ -546,12 +464,15 @@
 			\begin{itemize}
 				\item $\int x\e^{ax}\,\mathrm dx=\frac{1}{a^2}(ax-1)\e^{ax},\int x^2\e^{ax}\,\mathrm dx=\frac{a^2x^2-2ax+2}{a^3}\e^{ax},\int x^3\e^{ax}\,\mathrm dx=\frac{a^3x^3-3a^2x^2+6ax-6}{a^4}\e^{ax},\int x^n\e^{ax}\,\mathrm dx=\frac{1}{a}x^n\e^{ax}-\frac{n}{a}\int x^{n-1}\e^{ax}\,\mathrm dx.$
 				\item $\int_0^{\infty}x^n\e^{-ax}\,\mathrm dx=n!/a^{n+1}.$
+				\item $\int_a^\infty x^n\e^{-\lambda x}\,\mathrm dx=\e^{-\lambda a}\sum_{j=0}^n\frac{n!a^j}{j!\lambda^{n+1-j}}$.
+				\item $\int_a^\infty\lambda\e^{-\lambda x}\,\mathrm dx=\e^{-\lambda a}$; $\int_0^a\lambda\e^{-\lambda x}\,\mathrm dx=1-\e^{-\lambda a}$.
+				\item $\int_a^\infty\frac{\lambda^kx^{k-1}\e^{-\lambda x}}{(k-1)!}\,\mathrm dx=\e^{-\lambda a}\sum_{j=0}^{k-1}\frac{(\lambda a)^j}{j!}$.
 				\item $\int\sqrt{a^2-x^2}\,\mathrm dx=\frac{x}{2}\sqrt{a^2-x^2}+\frac{a^2}{2}\arcsin\frac{x}{a}.$
 				\item $\int \ln x\,\mathrm dx=x\ln x-x,\int x^n\ln x\,\mathrm dx=\frac{1}{n+1}x^{n+1}\left(\ln x-\frac{1}{n+1}\right).$
 				\item $\int x\exp\left(-x^2/\sigma^2\right)\,\mathrm dx=-\frac{\sigma^2}{2}\exp\left(-x^2/\sigma^2\right)+C.$
-				\item $\int_{-\infty}^{+\infty} \exp\left(-(x-\lambda)^2/\mu^2\right)\,\mathrm dx=\mu\sqrt{\uppi}$.
+				\item $\int_{-\infty}^{+\infty} \exp\left(-(x-\lambda)^2/\mu^2\right)\,\mathrm dx=|\mu|\sqrt{\uppi}$.
 				\item $\int_{-\infty}^{+\infty}x^2\exp\left(-x^2/\mu^2\right)\,\mathrm dx=\frac{\mu^3}{2}\sqrt{\uppi}.$
 			\end{itemize}
 		\end{card}
-	\end{multicols*}
+	\end{cheatsheetcolumns}
 \end{document}
