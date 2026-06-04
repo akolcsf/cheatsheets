@@ -1,0 +1,93 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{zh-cheatsheet}[2026/06/04 Compact Chinese math cheatsheet template]
+
+\RequirePackage[landscape,top=0.3cm,bottom=0.3cm,left=0.3cm,right=0.3cm]{geometry}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{amsmath,amsthm,amsfonts,amssymb}
+\RequirePackage{mathrsfs}
+\RequirePackage{mathtools}
+\RequirePackage{derivative}
+\RequirePackage{upgreek}
+\RequirePackage[condensed,math]{iwona}
+\RequirePackage{multicol}
+\RequirePackage{enumitem}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,calc}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{listings}
+
+\renewcommand{\CJKfamilydefault}{\CJKsfdefault}
+\renewcommand{\rmdefault}{\sfdefault}
+
+\DeclareSymbolFont{IwonaDigits}{OT1}{iwona}{c}{n}
+\SetSymbolFont{IwonaDigits}{bold}{OT1}{iwona}{bc}{n}
+
+\AtBeginDocument{%
+  \DeclareMathSymbol{0}{\mathalpha}{IwonaDigits}{`0}%
+  \DeclareMathSymbol{1}{\mathalpha}{IwonaDigits}{`1}%
+  \DeclareMathSymbol{2}{\mathalpha}{IwonaDigits}{`2}%
+  \DeclareMathSymbol{3}{\mathalpha}{IwonaDigits}{`3}%
+  \DeclareMathSymbol{4}{\mathalpha}{IwonaDigits}{`4}%
+  \DeclareMathSymbol{5}{\mathalpha}{IwonaDigits}{`5}%
+  \DeclareMathSymbol{6}{\mathalpha}{IwonaDigits}{`6}%
+  \DeclareMathSymbol{7}{\mathalpha}{IwonaDigits}{`7}%
+  \DeclareMathSymbol{8}{\mathalpha}{IwonaDigits}{`8}%
+  \DeclareMathSymbol{9}{\mathalpha}{IwonaDigits}{`9}%
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\columnsep}{3pt}
+
+\setlist{nosep,leftmargin=0.8em,labelsep=0.2em}
+\setlist[itemize,2]{label=\fontsize{3pt}{3.5pt}\selectfont$\square$}
+
+\newtcolorbox{card}[1]{
+  enhanced,
+  sharp corners,
+  breakable,
+  colback=white,
+  colbacktitle=gray!10,
+  coltitle=black,
+  fonttitle=\bfseries\fontseries{bc}\selectfont\scriptsize,
+  title={#1},
+  frame style={
+    draw=black!70,
+    line width=0.5pt,
+    dashed,
+    dash pattern=on 2pt off 1pt
+  },
+  left=1pt,right=1pt,top=1pt,bottom=1pt,
+  toptitle=1pt,bottomtitle=1pt,
+  boxrule=0pt,
+  before skip=2pt,
+  after skip=2pt,
+  parbox=false,
+}
+
+\lstset{
+  basicstyle=\ttfamily\fontsize{6pt}{6pt}\selectfont,
+  breaklines=true,
+  frame=none,
+  aboveskip=0pt,
+  belowskip=0pt
+}
+
+\newcommand{\cheatsheetbodyfont}{\fontsize{7pt}{8pt}\selectfont}
+\newenvironment{cheatsheetcolumns}[1][4]{%
+  \cheatsheetbodyfont
+  \begin{multicols*}{#1}%
+}{%
+  \end{multicols*}%
+}
+
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand*{\oo}[1]{\left(#1\right)}
+\newcommand*{\oc}[1]{\left(#1\right]}
+\newcommand*{\cc}[1]{\left[#1\right]}
+\newcommand*{\co}[1]{\left[#1\right)}
+\newcommand{\Rnum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\Ftrans}{\raisebox{4pt}{$\xleftrightarrow{\mathcal{F}}$}}
+\newcommand{\FTrans}{\xleftrightarrow{\mathcal{F}}}
+\newcommand{\Ltrans}{\raisebox{4pt}{$\xleftrightarrow{\mathcal{L}}$}}

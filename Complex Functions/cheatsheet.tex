@@ -1,0 +1,215 @@
+\documentclass[landscape,a4paper]{ctexart}
+\makeatletter
+\def\input@path{{../}}
+\makeatother
+\usepackage{zh-cheatsheet}
+
+\begin{document}
+	
+	 
+
+	
+	\begin{cheatsheetcolumns}
+		\begin{card}{解析函数}
+			\begin{itemize}
+				\item C-R方程: $\begin{cases}\pdv{u}!{x}=\pdv{v}!{y}\\\pdv{u}!{y}=-\pdv{v}!{x}\end{cases}$
+				\item 由C-R方程求解析函数: $v(x,y)=\int \pdv{v}!{y}\,\odif{y}+\varphi(x)$
+				\item 调和函数拉普拉斯方程: $\pdv[2]{\varphi}!{x}+\pdv[2]{\varphi}!{y}=0$
+				\item $\int_C f(z)\,\odif{z}=\int_b^af(z(t))z'(t)\,\odif{t}$\\$\left|\int_Cf(z)\,\odif{z}\right|\le\int_C\left|f(z)\right|\,\odif{s}$
+				\item $\displaystyle\oint_\Gamma f(z)\,\odif{z}=\begin{cases}0,&\Gamma\text{内无奇点}\\2\uppi\ii\sum_{\xi\in\bar\Gamma}\operatorname{Res}\left[f(z),\xi\right], &\Gamma\text{内有奇点}\end{cases}$
+				\item $f$ 在 $C$ 上连续, $C$ 内解析: $f(\xi)=\dfrac{1}{2\uppi\ii}\int_C\dfrac{f(z)}{z-\xi}\,\odif{z}$
+				\item 平均值定理: $f(\xi)=\dfrac{1}{2\uppi}\displaystyle\int_0^{2\uppi}f(\xi+R\e^{\ii\theta})\,\odif{\theta}$
+				\item 最大模原理: $f(z)$ 在 $D$ 内解析且不为常数\\$\Rightarrow$ $\left|f(z)\right|$在$D$内没有最大值\\$\Rightarrow$若$f$在$\partial D$上连续, 则 $\left|f(z)\right|$在$\partial D$上有最大值
+				\item 高阶导数: $f^{(n)}(\xi)=\dfrac{n!}{2\uppi\ii}\displaystyle\oint_C\dfrac{f(z)}{(z-\xi)^{n+1}}\,\odif{z}$
+				\item 推论(估界): $\left|f^{(n)}\right|\le\dfrac{n!M}{R^n}$
+			\end{itemize}
+		\end{card}
+		\begin{card}{级数}
+			\begin{itemize}
+				\item 对于幂级数 $\sum a_nz^n$, 求收敛半径 $R$
+				\begin{itemize}
+					\item 若所有 $a_n$ 不为 $0$\\
+					$\lambda=\lim\limits_{n\to\infty}\dfrac{\left|a_{n+1}\right|}{\left|a_n\right|},\sqrt[n]{a_n};R=\dfrac{1}{\lambda}$
+					\item 若为隔项级数 $\sum a_nz^{kn+b}$\\
+					$R=\sqrt[k]{R'}$, $R'$ 是对 $a_n$ 使用一般判别法得到的收敛半径
+				\end{itemize}
+				\item $f(z)=\sum_{0}^{\infty}a_n(z-z_0)^n$\\
+				$a_n=\dfrac{1}{n!}f^{(n)}(z_0)=\dfrac{1}{2\uppi\ii}\displaystyle\oint_C\dfrac{f(z)}{(z-z_0)^{n+1}}\,\odif{z}$
+				\item 
+				\begin{itemize}
+					\item $1/(1-z)=\sum_0^\infty z^n=1+z+z^2+\dots,\left|z\right|<1$
+					\item 不要忘了整体求导\&积分
+				\end{itemize}
+			\end{itemize}
+		\end{card}
+		\begin{card}{留数}
+			\begin{itemize}
+				\item 零点: $f(z_0)=0,\lim\limits_{z\to z_0}\dfrac{f(z)}{(z-z_0)^m}\neq0$ $\Rightarrow$ $z_0$ 为 $f(z)$ 的 $m$ 阶零点\\
+				$f(z)=0+\dots+0+a_m(z-z_0)^m+\dots$, $0\le m< \infty$
+				\item 奇点为中心的去心圆域上洛朗展开:
+				$
+				\begin{cases}
+					\text{无负幂项}\Rightarrow \text{可去奇点}\\
+					\text{最低} -N \text{阶}\Rightarrow N\text{阶极点}\\
+					\text{无限负幂项}\Rightarrow \text{本性奇点}
+				\end{cases}
+				$
+				\item $f(z)=\dfrac{m\text{阶零点}@ z_0}{n\text{阶零点}@ z_0}\Rightarrow\begin{cases}\text{可去奇点},m\ge n\\(n-m)\text{阶极点},m<n\end{cases}$
+				\item 留数: $\operatorname{Res}\cc{f(z),z_0}=a_1=\dfrac{1}{2\uppi\ii}\displaystyle\oint_C f(z)\,\odif{z}$
+				\item \begin{itemize}
+					\item 可去奇点 $\Rightarrow$ $0$
+					\item 本性奇点 $\Rightarrow$ 洛朗展开
+					\item $m$ 阶极点 $\Rightarrow$ $\dfrac{1}{(m-1)!}\lim\limits_{z\to z_0}\dfrac{\mathrm{d}^{m-1}}{\mathrm{d}z^{m-1}}\cc{(z-z_0)^mf(z)}$
+					\item 简单极点(特例) $\Rightarrow$ $(z-z_0)f(z)$
+					\end{itemize}
+				\item 留数定理: $\oint_c f(z)\,\odif{z}=2\uppi\ii\sum_{z_0\in D}\operatorname{Res}\cc{f(z),z_0}$
+				\item $f(z)$ 在 $\infty$ 点的性态 $\Leftrightarrow$ $f(1/\xi)$ 在 $0$ 点的性态\\
+				$\operatorname{Res}\cc{f(z),\infty}=-\operatorname{Res}\cc{f(1/\xi)/\xi^2,0}=-\frac{1}{2\uppi\ii}\oint_Cf(z)\,\odif{z}$
+				\item $\infty$ 为 $f(z)$ 可去奇点 $\nRightarrow$ $\operatorname{Res}\cc{f(z),\infty}=0$
+				\item $\int_0^{2\uppi}R(\cos\theta,\sin\theta)\,\odif{\theta}\Rightarrow z=\e^{\ii\theta}$, 转化为圆环积分\\$\cos\theta=(z^2+1)/2z,\sin\theta=(z^2-1)/2\ii z,\odif{z}=\ii z\odif{\theta}$
+				\item $R(x)$ 为有理分式, 下比上至少高二次\\
+				$\int_{-\infty}^{+\infty}R(x)\,\odif{x}=2\uppi\ii\sum_{\text{上半平面}}\operatorname{Res}\cc{R(z), z_0}$
+				\item $R(x)$ 为有理分式, 下比上至少高一次, 乘上一个三角函数\\
+				$\int_{\infty}^{+\infty}R(x)\e^{\ii ax}\,\odif{x}(a>0)=2\uppi\ii\sum_{\text{上半平面}}\operatorname{Res}\cc{R(z)\e^{\ii az},z_0}$
+			\end{itemize}
+		\end{card}
+		\begin{card}{积分变换}
+			\begin{itemize}
+				\item 离散频谱转换为连续频谱: $\mathcal{F}[f(t)]=\sum_{n=-\infty}^{+\infty}C_n\delta(\omega-n\omega_0)$	
+				\item 傅里叶像函数微分性质: $\mathcal F^{-1}[F'(\omega)]=-\ii tf(t)$, 用来求 $\mathcal F[t^nf(t)]$
+				\item Parseval等式: $\int_{-\infty}^{+\infty}f^2(t)\,\mathrm dt=\frac{1}{2\uppi}\int_{-\infty}^{+\infty}\left|F(\omega)\right|^2\,\mathrm d\omega$
+				\item 拉普拉斯计算广义积分: $\int_0^{+\infty}f(t)\e^{-kt}\,\odif{t}=\mathcal{L}\cc{f(t)}(k)$
+				\item 留数法求拉普拉斯逆变换: $f(t)=\sum\limits_{\text{左半平面}}\operatorname{Res}\cc{F(s)\e^{st},s_k}$
+			\end{itemize}
+		\end{card}
+		\begin{card}{矢量运算}
+			\begin{itemize}
+				\item $\nabla\times\left(\nabla\times\mathbf{A}\right)=\nabla\left(\nabla\cdot\mathbf{A}\right)-\nabla^2\mathbf{A}$
+				\item $\mathbf{C}\times\left(\mathbf{B}\times\mathbf{A}\right)=\left(\mathbf{C}\cdot\mathbf{B}\right)\mathbf{A}-\left(\mathbf{C}\cdot\mathbf{A}\right)\mathbf{B}$
+				\item $\mathbf{U}\cdot\left(\mathbf{V}\times\mathbf{W}\right)=\left(\mathbf{U}\times\mathbf{V}\right)\cdot\mathbf{W}$
+			\end{itemize}
+		\end{card}
+		\begin{card}{分离变量法}
+			\begin{itemize}
+			\item 适用范围: 有限区域, 方程齐次, BC齐次\\
+			\makebox[0.9\textwidth][l]{一维\hrulefill}
+			\item 目标: $X''+\lambda X=0$
+			\item 一般 $X$ 的解: $X_n=A_n\cos\dfrac{n\uppi}{L}x+B_n\sin\dfrac{n\uppi}{L}x$
+			\item BC齐次化: 设 $u=v+w$, BC 定 $w$, 常数变易法解 $v$
+			\begin{itemize}
+				\item 双端第一类: $\left.u\right|_{x=0}=\alpha(t),\left.u\right|_{x=L}=\beta(t)$ $\Rightarrow$ $\alpha(t)+\frac{\beta(t)-\alpha(t)}{L}x$
+				\item 双端第二类: $\left.u_x\right|_{x=0}=\alpha(t),\left.u_x\right|_{x=L}=\beta(t)$\\ $\Rightarrow$ $\alpha(t)x+\frac{\beta(t)-\alpha(t)}{2L}x^2$
+				\item 混合: $\left.u\right|_{x=0}=\alpha(t),\left.u_x\right|_{x=L}=\beta(t)$ $\Rightarrow$ $\alpha(t)+\beta(t)x$
+			\end{itemize}
+			\item 源项和BC都与 $t$ 无关 $\Rightarrow$ $w$ 与 $t$ 无关, 可利用 $w$ 消去源项
+			\makebox[0.9\textwidth][l]{二维圆域\hrulefill}
+			\item 目标: $\Theta''+\lambda\Theta=0$, $\Theta$ 周期为 $2\uppi$
+			\item 欧拉方程快速解法: 令 $P=\rho^r$, 代入 $\rho^2 P''+a\rho P+bP=0$, 得 $r(r-1)+ar+b=0$\\
+			\begin{tabular}{l|l}
+				不相等实根 $r_1,r_2$        & $P=C_1\rho^{r_1}+C_2\rho^{r_2}$                                                        \\
+				相等实根 $r$               & $P=C_1\rho^r+C_2\rho^r\ln\rho$                                                         \\
+				共轭复根 $\alpha+\ii\beta$ & $P=\rho^\alpha\left(C_1\sin\left(\beta\ln\rho\right)+C_2\cos\left(\beta\ln\rho\right)\right)$
+			\end{tabular}%
+			\\
+			\makebox[0.9\textwidth][l]{常数变易法\hrulefill}
+			\item 适用范围: 有限区域, 方程非齐次, BC 齐次 (非齐次需齐次化)
+			\item 流程: 解出齐次方程齐次BC的目标函数系, 设系数为 $v_n(t)$, 回代非齐次方程定解.
+			\end{itemize}
+		\end{card}
+		\begin{card}{行波法}
+			\begin{itemize}
+			\item 无界波动方程, 或边界具有行波性的方程(如古萨问题)
+			\item $\pdif{\xi}=\frac{1}{2}\left(\pdif{x}+\frac{1}{a}\pdif{t}\right)$, $\pdif{\eta}=\frac{1}{2}\left(\pdif{x}-\frac{1}{a}\pdif{t}\right)$
+			\item 齐次化原理: 一维无界波动方程$\begin{cases}\pdv[2]{u}!{t}=a^2\pdv[2]{u}!{x}+f(x,t)\\\left.u\right|_{t=0}=\phi(x)\\\left.u_t\right|_{t=0}=\psi(x)\end{cases}$\\
+			分解为$\begin{cases}\pdv[2]{v}!{t}=a^2\pdv[2]{v}!{x}\\\left.v\right|_{t=0}=\phi(x)\\\left.v_t\right|_{t=0}=\psi(x)\end{cases}$(\Rnum{1}),$\begin{cases}\pdv[2]{w}!{t}=a^2\pdv[2]{w}!{x}+f(x,t)\\\left.w\right|_{t=0}=\left.w_t\right|_{t=0}=0\end{cases}$(\Rnum{2})\\
+			(\Rnum{2})先解$\begin{cases}\pdv[2]{\omega}!{t}=a^2\pdv[2]{\omega}!{x},t>\tau\\\left.\omega\right|_{t=\tau}=0\\\left.\omega_t\right|_{t=\tau}=f(x,\tau)\end{cases}$, 然后 $w=\int_0^t\omega(x,t,\tau)\,\odif{\tau}$
+			\item 非齐次修正项: $\frac{1}{2a}\int_0^t\int_{x-a(t-\tau)}^{x+a(t-\tau)}f(\xi,\tau)\,\odif{\tau,\xi}$, 加在达朗贝尔里
+			\item 三维行波: 考虑$u$在球心$\vec{x}$半径$r$的球上的平均值 $\tilde{u}(\vec{x},r,t)$, 则 $r\tilde{u}$ 构成一维波动方程, 行波法解出 $\tilde{u}$, 令 $r\to 0$ 得 $u(\vec{x},t)$
+			\end{itemize}
+		\end{card}
+		\begin{card}{积分变换法}
+			\begin{itemize}
+				\item 适用范围: 无界区域傅里叶, 半无界区域拉普拉斯
+				\item 源项 $f(x,t)$ $\begin{cases}1,t,\e^t\Rightarrow \mathcal L\\\e^{t^2},\delta(t)\Rightarrow \mathcal F\end{cases}$
+			\end{itemize}
+		\end{card}
+		\begin{card}{格林函数法}
+			\begin{itemize}
+				\item 区域为$V$, 表面为 $C$, 构造的格林函数$G_\xi(x)$需要满足
+				\begin{itemize}
+					\item 第一边值问题: $\begin{cases}
+						\nabla^2G=\delta(x-\xi)\\
+						\left.G_\xi\right|_{C}=0
+						\end{cases}$\\
+					\item 第二边值问题: $\begin{cases}
+						\nabla^2G=\delta(x-\xi)\\
+						\left.\pdv{G_\xi}!{n}\right|_{C}=0
+					\end{cases}$\\
+				\end{itemize}
+				\item 格林函数的形态只和区域形状有关\\
+				\makebox[0.9\textwidth][l]{三维\hrulefill}
+				\begin{itemize}
+					\item 第一边值问题: \\
+					$u(\xi)=\iiint_V f(x)G_\xi(x)\,\odif{V}+\iint_C h(x)\pdv{G_\xi}!{n}(x)\,\odif{S}$
+					\item 第二边值问题: \\
+					$u(\xi)=\iiint_Vf(x)G_\xi(x)\,\odif{V}-\iint_Ch(x)G_\xi(x)\,\odif{S}+C$
+					\item 镜像法求格林函数(第一类边值):
+					\begin{itemize}
+						\item 半空间 $(z>0)$: 在 $\xi$ 关于 $xOy$ 平面对称点 $\xi'$ 放置像电荷, $G_\xi(x)=\dfrac{1}{4\uppi}\left(r_{x\xi}^{-1}-r_{x\xi'}^{-1}\right)$
+						\item 四分之一空间 $(y>0,z>0)$ 在 $\xi$ 关于 $xOy$, $xOz$ 平面对称点 $\xi_1,\xi_2,\xi_3$ 放置 3 个像电荷, $\xi$ 相邻的异号, $\xi$ 对面的同号, $G=\dfrac{1}{4\uppi}\left(r_{x\xi}^{-1}-r_{x\xi_1}^{-1}+r_{x\xi_2}^{-1}-r_{x\xi_3}^{-1}\right)$
+						\item 球 $(r<R)$: 在 $\xi$ 关于球面的反演点 $\xi'$ ($r_{O\xi}r_{O\xi'}=R^2$) 放置像电荷, $G=\dfrac{1}{4\uppi}\left(r_{x\xi}^{-1}-Rr_{O\xi}^{-1}r_{x\xi'}^{-1}\right)$
+					\end{itemize}
+				\end{itemize}
+				\makebox[0.9\textwidth][l]{二维\hrulefill}
+				\begin{itemize}
+					\item 第一边值问题: \\
+					$u(\xi)=\iint_D f(x)G_\xi(x)\,\odif{\sigma}+\iint_\Gamma h(x)\pdv{G_\xi}!{n}(x)\,\odif{s}$
+					\item 镜像法求格林函数(第一类边值):
+					\begin{itemize}
+						\item 半平面 $(y>0)$: 在 $\xi$ 关于 $x$ 轴对称点 $\xi'$ 放置像电荷, $G_\xi(x)=\dfrac{1}{2\uppi}\ln\left|\dfrac{r_{x\xi}}{r_{x\xi'}}\right|$
+						\item 圆 $(r<R)$: 在 $\xi$ 关于球面的反演点 $\xi'$ ($r_{O\xi}r_{O\xi'}=R^2$) 放置像电荷, $G=\dfrac{1}{2\uppi}\ln\left|\dfrac{Rr_{x\xi}}{r_{O\xi'}r_{x\xi'}}\right|$
+					\end{itemize}
+				\end{itemize}
+				\item $\pdv{G_\xi}!{n}\,\odif{S}=\nabla G_{\xi}\cdot\mathbf{n}\,\odif{S}=\nabla G_{\xi}\cdot\,\odif{\mathbf{S}}$
+			\end{itemize}
+		\end{card}
+	\end{cheatsheetcolumns}
+	\newpage
+	\begin{cheatsheetcolumns}[3]
+		\begin{card}{傅里叶级数系数表}
+			余弦系数分号前为 $a_0$, 分号后为 $a_n$;\\
+			奇数项 $=\frac{1}{2}[1-(-1)^n]$, 偶数项 $=\frac{1}{2}[1+(-1)^n]$\\
+			\begin{tabular}{l|l|l}
+				函数 $f(x)$ & 正弦系数 $b_n$            & 余弦系数 $a_n$                               \\ \hline
+				$C$       & 奇数项 $4C/n\uppi$       & $2C; 0$                         \\
+				$x$       & $(-1)^{n+1}2L/n\uppi$ & $L;$ 奇数项 $-4L/n^2\uppi^2$       \\
+				$L-x$     & $2L/n\uppi$           & $L;$ 奇数项 $4L/n^2\uppi^2$        \\
+				$x^2$      & $(-1)^{n+1}2L^2/n\uppi-[1-(-1)^n]4L^2/n^3\uppi^3$            & $2L^2/3;(-1)^n4L^2/n^2\uppi^2$          \\
+				$x(L-x)$  & 奇数项 $8L^2/n^3\uppi^3$ & $L^2/3;$ 偶数项 $-4L^2/n^2\uppi^2$ \\
+				$\e^{ax}$  & $\dfrac{2n\uppi}{L^2a^2+n^2\uppi^2}[L-(-1)^nL\e^{aL}]$       & $\dfrac{2aL}{L^2a^2+n^2\uppi^2}[(-1)^n\e^{aL}-1]$ \\
+				$u(x-x_0)$ & $\dfrac{2C}{n\uppi}\left[1-\cos\dfrac{n\uppi x_0}{L}\right]$ & $\dfrac{2C}{n\uppi}\sin\dfrac{n\uppi x_0}{L}$   
+			\end{tabular}%
+			\\
+			$\int x\sin(mx)\,\odif{x}=\sin(mx)/m^2-x\cos(mx)/m$\\
+			$\int x\cos(mx)\,\odif{x}=\cos(mx)/m^2+x\sin(mx)/m$
+		\end{card}
+		\begin{card}{贝塞尔函数}
+			\begin{itemize}
+				\item 一般分离变量法得到的方程: $\rho^2P''+\rho P'+\left(\lambda\rho^2-n^2\right)P=0$\\
+				换元 $x=\sqrt{\lambda}\rho$化为标准贝塞尔方程
+			\item \begin{itemize}
+			\item $\int xJ_0(x)\,\odif{x}=xJ_1(x)$, $\int x^2J_0(x)\,\odif{x}=x^2J_1(x)+xJ_0(x)-\int J_0(x)\,\odif{x}$\\$\int x^mJ_0(x)\,\odif{x}=x^mJ_1(x)+(m-1)x^{m-1}J_0(x)-(m-1)^2\int x^{m-2}J_0(x)\,\odif{x}$
+			\item $\int x^mJ_1(x)\,\odif{x}=-x^mJ_0(x)+m\int x^{m-1}J_0(x)\,\odif{x}$
+			\item $\int \frac{J_0(x)}{x^m}\,\odif{x}=\frac{J_1(x)}{(m-1)^2x^{m-2}}-\frac{J_0(x)}{(m-1)x^{m-1}}-\frac{1}{(m-1)^2}\int \frac{J_0(x)}{x^{m-2}}\,\odif{x}$
+			\item $\int\frac{J_1(x)}{x^m}\,\odif{x}=-\frac{J_1(x)}{mx^{m-1}}+\frac{1}{m}\int \frac{J_0(x)}{x^{m-1}}\,\odif{x}$
+			\end{itemize}
+			\item $x^2y''+xy'-\left(x^2+n^2\right)y=0$ 的解是虚宗量贝塞尔函数 $y=AJ_n(\ii x)+BY_n(\ii x)$\\
+			$J_n(\ii x)$ 无实根, $Y_n(\ii x)$ 在 $0$ 处发散
+			\item $0$阶 $1$零点的加权正交函数系 $G_m(x)=J_0\left(\dfrac{\mu^{(1)}_m}{R}x\right), m\in\mathbb N, \mu^{(1)}_0=0$
+			\begin{itemize}
+				\item 展开方法: $\int_0^R xF(x)G_m(x)=C_m\cdot\frac{R^2}{2}J_0^2\left(\mu^{(1)}_m\right)$
+			\end{itemize}
+			\end{itemize}
+		\end{card}
+	\end{cheatsheetcolumns}
+\end{document}

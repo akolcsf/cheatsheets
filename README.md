@@ -1,36 +1,60 @@
 # Cheatsheets
 
-Cheatsheets for exams and LaTeX templates for building compact, efficient reference sheets.
+Reusable LaTeX templates and exam cheatsheets. The repository is organized so more courses can be added without tying the templates to a single subject.
 
-## Probability End-Term Cheatsheet
+## Templates
 
-Compact LaTeX cheatsheet for the Probability part of **Probability & Stochastic Processes (1)**.
-Most of the formulas and definitions are derived from Prof. Shen's lecture slides, with additional notes added during revision.
+- `eng-cheatsheet.sty`: compact English/math cheatsheet template.
+- `zh-cheatsheet.sty`: compact Chinese/math cheatsheet template based on `ctex`.
 
-## Files
+Both templates provide:
 
-- `cheatsheet.tex`: main cheatsheet content.
-- `probability-cheatsheet.sty`: reusable LaTeX template for dense multi-column math cheatsheets.
-- `cheatsheet.pdf`: compiled preview.
-- `LICENSE`: MIT license for the repository.
+- landscape A4 layout with tight margins;
+- multi-column `cheatsheetcolumns` environment;
+- dashed `card` boxes for topic blocks;
+- compact list and code-listing settings;
+- common math helper macros such as `\ii`, `\e`, `\oo`, `\cc`, `\Ftrans`, and `\Ltrans`.
+
+`eng-cheatsheet.sty` also includes probability helpers such as `\PP`, `\EE`, `\var`, `\cov`, and `\C`.
+`zh-cheatsheet.sty` adds Chinese font defaults, ctex support, Iwona math digit handling, and `\Rnum` for Roman numerals.
+
+## Current Cheatsheets
+
+- `Probability/`: Probability part of **Probability & Stochastic Processes (1)**.
+- `Complex Functions/`: Chinese cheatsheet for Complex Functions.
+
+Each course directory contains its own `cheatsheet.tex` and compiled `cheatsheet.pdf`.
 
 ## Build
 
-Install a LaTeX distribution with the packages used by the template, then run:
+Build from the corresponding course directory so the relative template path resolves cleanly.
+
+English/template-based courses:
 
 ```powershell
+cd Probability
 pdflatex cheatsheet.tex
 ```
 
-The template depends on common TeX Live packages including `geometry`, `multicol`, `amsmath`, `mathtools`, `derivative`, `upgreek`, `iwona`, `enumitem`, `tikz`, `soul`, `tcolorbox`, and `listings`.
+Chinese/ctex courses:
 
-## Template Usage
+```powershell
+cd "Complex Functions"
+xelatex cheatsheet.tex
+```
 
-Use the style file in another cheatsheet by placing `probability-cheatsheet.sty` beside your `.tex` file:
+The Chinese template is intended for XeLaTeX or LuaLaTeX because it uses `ctex`.
+
+## Starting a New Cheatsheet
+
+For an English cheatsheet:
 
 ```latex
 \documentclass[landscape,a4paper]{article}
-\usepackage{probability-cheatsheet}
+\makeatletter
+\def\input@path{{../}}
+\makeatother
+\usepackage{eng-cheatsheet}
 
 \begin{document}
 \begin{cheatsheetcolumns}
@@ -43,4 +67,22 @@ Use the style file in another cheatsheet by placing `probability-cheatsheet.sty`
 \end{document}
 ```
 
-The package provides the compact page layout, the `card` environment, list spacing, highlighting via `\emph`, and probability/math helper macros such as `\PP`, `\EE`, `\var`, `\cov`, `\C`, and `\e`.
+For a Chinese cheatsheet:
+
+```latex
+\documentclass[landscape,a4paper]{ctexart}
+\makeatletter
+\def\input@path{{../}}
+\makeatother
+\usepackage{zh-cheatsheet}
+
+\begin{document}
+\begin{cheatsheetcolumns}
+  \begin{card}{主题}
+    \begin{itemize}
+      \item 关键公式：$f^{(n)}(z)=\odv[n]{f}{z}$.
+    \end{itemize}
+  \end{card}
+\end{cheatsheetcolumns}
+\end{document}
+```
