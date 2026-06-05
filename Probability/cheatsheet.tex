@@ -305,6 +305,7 @@
 					\item Discrete uniform $\{a,\dots,b\}$: $\dfrac{\e^{as}(1-\e^{(b-a+1)s})}{(b-a+1)(1-\e^s)}$,
 					\item Uniform $[a,b]$: $\dfrac{\e^{bs}-\e^{as}}{(b-a)s}$; Exponential: $\dfrac{\lambda}{\lambda-s}$,
 					\item Gaussian $N(\mu,\sigma^2)$: $\exp(\mu s+\sigma^2s^2/2)$.
+					\item Pascal: $\left(\dfrac{p\e^{s}}{1-(1-p)\e^{s}}\right)^k$; NegBin: $\left(\dfrac{p}{1-(1-p)\e^{s}}\right)^k$.
 				\end{itemize}
 			\end{itemize}
 		\end{card}
@@ -410,10 +411,15 @@
 					\item \textbf{Independence}: seq. $X_{n+1}, X_{n+2}, \dots$ after $n$ is a Bernoulli SP independent of $X_1,\dots,X_n$,
 					\item \textbf{Memoryless}: $W_n=$ trials from $n$ to next success $\sim\operatorname{Geo}(p)$,
 					\item \textbf{Interarrival}: $Y_k=$ time of $k$-th success, $T_1=Y_1$, $T_k=Y_k-Y_{k-1}$;\\ $T_i\sim$ i.i.d. $\operatorname{Geo}(p)$; $Y_k=\sum_{i=1}^kT_i$,
-					\item \textbf{$k$-th success}: $Y_k\sim\operatorname{Pascal}(k,p)$,
+					\item \textbf{Trials until $k$-th success}: $Y_k\sim\operatorname{Pascal}(k,p)$,
 					\begin{itemize}
 						\item $p_{Y_k}(t)=\C{t-1}{k-1}p^k(1-p)^{t-k}$, $t=k,k+1,\dots$,
 						\item $\EE[Y_k]=k/p$, $\var(Y_k)=k(1-p)/p^2$,
+					\end{itemize}
+					\item \textbf{Failures until $k$-th success}: $Z_k\sim\operatorname{NegBin}(k,p)$,
+					\begin{itemize}
+						\item $p_{Z_k}(t)=\C{t+k-1}{k-1}p^k(1-p)^{t}$, $t=0,1,2,\dots$,
+						\item $\EE[Z_k]=k(1-p)/p$, $\var(Z_k)=k(1-p)/p^2$,
 					\end{itemize}
 					\item \textbf{Splitting}: keep w.p. $q\Rightarrow$ Bernoulli SP($pq$),
 					\item \textbf{Merging Independent Bernoullis}:\\ Bernoulli($p$) OR Bernoulli($q$)$\Rightarrow$ Bernoulli($p+q-pq$).
@@ -443,8 +449,9 @@
 						$X_i$ & $N$ & $Y$\\
 						Bernoulli($p$) & Binomial($m,q$) & Binomial($m,pq$)\\
 						Bernoulli($p$) & Poisson($\lambda$) & Poisson($\lambda p$)\\
+						Bernoulli($p$) & NegBin($r,q$) & NegBin($r, q/(q+p-pq)$)\\
 						Geo($p$) & Geo($q$) & Geo($pq$)\\
-						Exponential($\lambda$) & Geo($q$) & Exponential($\lambda q$)
+						Exponential($\lambda$) & Geo($q$) & Exponential($\lambda q$)\\
 					\end{tabular}
 				\end{center}
 			\end{itemize}
