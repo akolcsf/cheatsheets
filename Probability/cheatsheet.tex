@@ -24,6 +24,7 @@
 				\item Hockey-Stick Identity: $\sum_{i=k}^n\C{i}{k}=\C{n+1}{k+1}$.
 				\item Diagonal Sum: $\sum_{k=0}^m \C{n+k}{k}=\C{n+m+1}{m}$.
 				\item Vandermonde's Identity: $\sum_{k=0}^r \C{n}{k}\C{m}{r-k}=\C{n+m}{r}$.
+				\item Negative Binomial Sum: $\sum_{k=0}^\infty \C{n+k-1}{n-1}x^k=(1-x)^{-n}$.
 			\end{itemize}
 		\end{card}
 		\begin{card}{Probability Space}
@@ -44,7 +45,7 @@
 				\end{itemize}
 			\end{itemize}
 		\end{card}
-		\begin{card}{Conditioning and Independence}
+		\begin{card}{Conditioning, Independence \& Prob. Ineq.s}
 			\makebox[0.9\textwidth][l]{\textbf{\textit{Conditioning}}\hrulefill}
 			\begin{itemize}
 				\item \textbf{Definition}: For $\PP(B)\neq 0$, $\PP(A|B)=\PP(A\cap B)/\PP(B)$.
@@ -82,6 +83,16 @@
 				\end{itemize}
 				\item \textbf{Symmetric Difference}: $\PP(A \triangle B) = \PP(A) + \PP(B) - 2\PP(A \cap B)$.
 			\end{itemize}
+			\end{itemize}
+			\makebox[0.9\textwidth][l]{\textbf{\textit{Probability Inequalities}}\hrulefill}
+			\begin{itemize}
+				\item \textbf{Fréchet Inequalities}:
+				\begin{itemize}
+					\item Intersection: $\max(0, \PP(A) + \PP(B) - 1) \leq \PP(A \cap B) \leq \min(\PP(A), \PP(B))$.
+					\item Union: $\max(\PP(A), \PP(B)) \leq \PP(A \cup B) \leq \min(1, \PP(A) + \PP(B))$.
+				\end{itemize}
+				\item \textbf{Boole's and Bonferroni Inequalities}: $\PP\left(\bigcup_{i=1}^n A_i\right) \leq \sum_{i=1}^n \PP(A_i)$,\\ $\PP\left(\bigcap_{i=1}^n A_i\right) \geq \sum_{i=1}^n \PP(A_i) - (n - 1)$
+				\item \textbf{Union of independent events}:\\$\PP\left(\bigcup_{i=1}^n A_i\right) = 1 - \prod_{i=1}^n (1 - \PP(A_i)) \geq 1 - \exp\left(-\sum_{i=1}^n \PP(A_i)\right)$.
 			\end{itemize}
 		\end{card}
 		\begin{card}{Discrete Random Variable}
@@ -309,7 +320,7 @@
 				\end{itemize}
 			\end{itemize}
 		\end{card}
-		\begin{card}{Probability Inequalities}
+		\begin{card}{RV Inequalities}
 			\begin{itemize}
 				\item \textbf{Markov}: $X\ge0,a>0\Rightarrow \PP(X\ge a)\le \EE[X]/a$.
 				\begin{itemize}
