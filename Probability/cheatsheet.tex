@@ -12,6 +12,7 @@
 				\item Pascal's Rule: $\C{n}{k}=\C{n-1}{k}+\C{n-1}{k-1}$.
 				\item Absorption Identity: $k\C{n}{k}=n\C{n-1}{k-1}$.
 				\item Trinomial Revision: $\C{n}{m}\C{m}{k}=\C{n}{k}\C{n-k}{m-k}$.
+				\item Multinomial Number: $\binom{n}{n_1,\dots,n_m}=\dfrac{n!}{n_1!\cdots n_m!}$, $\sum_i n_i=n$.
 				\item Row Sum: $\sum_{k=0}^{n}\C{n}{k}=2^n$.
 				\item Even-Odd Sums: $\sum_{k\ge 0} \C{n}{2k}=\sum_{k\ge 0}\C{n}{2k+1}=2^{n-1}$.
 				\item Weighted Sums:
@@ -152,6 +153,7 @@
 						\item \textbf{Conditional Expectation}:\\ $\EE[X|A]=\sum_x xp_{X|A}(x)$.
 						\item \textbf{Total Expectation Theorem}:\\ $\EE[X]=\PP(A_1)\EE[X|A_1]+\dots +\PP(A_n)\EE[X|A_n]$.
 						\item \textbf{Marginal PMF}:\\ $p_{X,Y}(x,y)=\sum_z p_{X,Y,Z}(x,y,z);p_X(x)=\sum_y p_{X,Y}(x,y)$.
+						\item \textbf{Derived RV}: $Z=g(X,Y)\Rightarrow p_Z(z)=\sum_{g(x,y)=z}p_{X,Y}(x,y)$.
 					\end{itemize}
 					\item \textbf{Independence}:\\ $\forall x,y\colon p_{X,Y}(x,y)=p_X(x)p_Y(y)$.
 					\item For Independent RVs:
@@ -217,7 +219,8 @@
 				\begin{itemize}
 					\item \textbf{Max}: $Z = \max(X_i) \implies F_Z(z) = [F_X(z)]^n \implies f_Z(z) = n[F_X(z)]^{n-1} f_X(z)$.
 					\item \textbf{Min}: $W = \min(X_i) \implies F_W(w) = 1 - [1 - F_X(w)]^n$.
-					\item \textit{Shortcut}: If $X_i \sim \operatorname{Exp}(\lambda_i)$, then $\min(X_1, \dots, X_n) \sim \operatorname{Exp}(\sum \lambda_i)$.
+					\item \textbf{Order Stat.}: continuous CDF $F$, $X_{(k)}\Rightarrow \PP(X_{(k)}\le x)=\PP(\operatorname{Bin}(n,F(x))\ge k)$.
+					\item \textit{Shortcut}: independent $X_i \sim \operatorname{Exp}(\lambda_i)\Rightarrow \min_iX_i \sim \operatorname{Exp}(\sum \lambda_i)$.
 				\end{itemize}
 				
 				\item \textbf{2D Uniform \& Geometric Probability}:
@@ -244,13 +247,14 @@
 					\item $\EE[XY]=\EE[X]\EE[Y]$,
 					\item $\var(X+Y)=\var(X)+\var(Y)$.
 					\item \textbf{Convolution}: If $X$ and $Y$ are independent and $Z=X+Y$, $f_Z(z)=(f_X\ast f_Y)(z)=\int_{-\infty}^{+\infty}f_X(x)f_Y(z-x)\,\mathrm dx$.
-					\item $X\sim N(\mu_X,\sigma_X^2),Y\sim N(\mu_Y,\sigma_Y^2)\Rightarrow X+Y\sim N(\mu_X+\mu_Y,\sigma_X^2+\sigma_Y^2)$.
+					\item $X\perp Y$, $X\sim N(\mu_X,\sigma_X^2),Y\sim N(\mu_Y,\sigma_Y^2)\Rightarrow X+Y\sim N(\mu_X+\mu_Y,\sigma_X^2+\sigma_Y^2)$.
 				\end{itemize}
 			\end{itemize}
 			\textbf{Joint / Multiple CDF}: $F_{X,Y}(x,y) = \PP(X \le x, Y \le y)$.
 			\begin{itemize}
 				\item \textbf{Marginals}: $F_X(x) = F_{X,Y}(x, \infty)$, $F_Y(y) = F_{X,Y}(\infty, y)$.
 				\item \textbf{From/To PDF}:\\$F_{X,Y}(x,y) = \int_{-\infty}^{x} \int_{-\infty}^{y} f_{X,Y}(u,v)\,\mathrm dv\,\mathrm du $\\$\implies f_{X,Y}(x,y) = \frac{\partial^2}{\partial x \partial y} F_{X,Y}(x,y)$.
+				\item \textbf{Derived RV}: $Z=g(X,Y)\Rightarrow F_Z(z)=\iint_{g(x,y)\le z}f_{X,Y}(x,y)\,\mathrm dx\,\mathrm dy$, $f_Z=F_Z'$.
 				\item \textbf{Independence}: $X \perp Y \iff F_{X,Y}(x,y) = F_X(x)F_Y(y)$.
 			\end{itemize}
 			
@@ -352,7 +356,14 @@
 				\item \textbf{Convergence}:
 				\begin{itemize}
 					\item \textbf{In Probability}: $X_n\xrightarrow{\PP}X\Leftrightarrow \PP(|X_n-X|\ge\epsilon)\to0,\forall\epsilon>0$,
+					\begin{itemize}
+						\item $\EE[X_n]\to c$, $\var(X_n)\to0\Rightarrow X_n\xrightarrow{\PP}c$ by Chebyshev,
+					\end{itemize}
 					\item \textbf{In Distribution}: $X_n\xrightarrow{D}X\Leftrightarrow F_{X_n}(x)\to F_X(x)$ at continuous $x$,
+					\begin{itemize}
+						\item $Y_n\xrightarrow{D}c$, $c$ constant $\Rightarrow Y_n\xrightarrow{\PP}c$, 
+						\item ``Convergence in dist.'' $\Rightarrow$ ``Bounded in prob.'':\\$\forall \varepsilon > 0, \exists M > 0, \forall n, \PP(|X_n|>M)<\varepsilon$. 
+					\end{itemize}
 					\item \textbf{Almost Surely}: $X_n\xrightarrow{\mathrm{a.s.}}X\Leftrightarrow \PP(\lim_nX_n=X)=1$,
 					\begin{itemize}
 						\item ``Almost Surely'': For almost all sample paths $\omega$.
@@ -364,7 +375,7 @@
 				\item $Z_n=\dfrac{S_n-n\mu}{\sigma\sqrt n}\xrightarrow{D}N(0,1)$; $\PP(Z_n\le z)\to\varPhi(z)$.
 				\item \textbf{Transform}: $\mathscr{M}_{Z_n}(s)=\e^{-s\mu\sqrt n/\sigma}\left(\mathscr{M}_{X_1}\left(\frac{s}{\sigma\sqrt n}\right)\right)^n\to \e^{s^2/2}$.
 				\item \textbf{Normal Approx.}: $S_n\approx N(n\mu,n\sigma^2)$; $\PP(S_n\le c)\approx\varPhi\left(\dfrac{c-n\mu}{\sigma\sqrt n}\right)$.
-				\item \textbf{Binomial Approx.}: $X_i\sim\text{Bernoulli}(p)$, $S_n=\sum_iX_i\sim\operatorname{Bin}(n,p)$,\\ $q=1-p$.
+				\item \textbf{Binomial Approx.}: $X_i\stackrel{i.i.d.}{\sim}\text{Bernoulli}(p)$, $S_n=\sum_iX_i\sim\operatorname{Bin}(n,p)$,\\ $q=1-p$.
 				\begin{itemize}
 					\item $\dfrac{S_n-np}{\sqrt{npq}}\approx N(0,1)$,
 					\item $\PP(k\le S_n\le l)\approx\varPhi\left(\dfrac{l+0.5-np}{\sqrt{npq}}\right)-\varPhi\left(\dfrac{k-0.5-np}{\sqrt{npq}}\right)$.
@@ -432,7 +443,7 @@
 						\item $p_{Z_k}(t)=\C{t+k-1}{k-1}p^k(1-p)^{t}$, $t=0,1,2,\dots$,
 						\item $\EE[Z_k]=k(1-p)/p$, $\var(Z_k)=k(1-p)/p^2$,
 					\end{itemize}
-					\item \textbf{Splitting}: keep w.p. $q\Rightarrow$ Bernoulli SP($pq$),
+					\item \textbf{Splitting}: keep independently w.p. $q\Rightarrow$ Bernoulli SP($pq$),
 					\item \textbf{Merging Independent Bernoullis}:\\ Bernoulli($p$) OR Bernoulli($q$)$\Rightarrow$ Bernoulli($p+q-pq$).
 				\end{itemize}
 				\item \textbf{Poisson Process}: continuous-time discrete-value SP $\{N_t\}_{t\ge0}$, $N_0=0$, $N_t\sim$ Poisson($\lambda t$); .
@@ -450,10 +461,14 @@
 						\item $f_{Y_k}(y)=\lambda^ky^{k-1}\e^{-\lambda y}/(k-1)!$, $y\ge0$;
 						\item $\EE[Y_k]=k/\lambda$, $\var(Y_k)=k/\lambda^2$,
 					\end{itemize}
-					\item \textbf{Splitting}: keep w.p. $p\Rightarrow\operatorname{Poisson}(\lambda p)$,
+					\item \textbf{Splitting}: keep independently w.p. $p$;\\$N_{\text{keep}}(t)\sim\operatorname{Poisson}(\lambda pt)$, $N_{\text{discard}}(t)\sim\operatorname{Poisson}(\lambda(1-p)t)$.
+					\begin{itemize}
+						\item Multi-type: mark independently type $i$ w.p. $p_i$;\\$\{N_i\}\sim$ indep. PP$(\lambda p_i)$, $N_i(t)\sim\operatorname{Poisson}(\lambda p_i t)$, $\EE[N_i(t)]=\lambda p_i t$.
+						\item Given $N(t)=n$: $\mathbf N(t)\sim\operatorname{Mult}(n;\mathbf p)$,\\ $\PP(\mathbf N=\mathbf n|N=n)=\dfrac{n!}{\prod_i n_i!}\prod_i p_i^{n_i}$, $\EE[N_i|N=n]=np_i$.
+					\end{itemize}
 					\item \textbf{Merging Independent Poissons}: $\operatorname{Poisson}(\lambda_1)+\operatorname{Poisson}(\lambda_2)=\operatorname{Poisson}(\lambda_1+\lambda_2)$;\\next arrival from SP 1 w.p. $\lambda_1/(\lambda_1+\lambda_2)$.
 				\end{itemize}
-				\item \textbf{Random Sum}: $Y=\sum_{i=1}^NX_i$, $Y=0$ if $N=0$; $\mathscr{M}_Y(s)=\mathscr{M}_N(\ln\mathscr{M}_X(s))$.
+				\item \textbf{Random Sum}: i.i.d. $X_i\perp N$, $Y=\sum_{i=1}^NX_i$, $Y=0$ if $N=0$; $\mathscr{M}_Y(s)=\mathscr{M}_N(\ln\mathscr{M}_X(s))$.
 				\item \textbf{Random Sum Table}:
 				\begin{center}
 					\begin{tabular}{@{}lll@{}}
