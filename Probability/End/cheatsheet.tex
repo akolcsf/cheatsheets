@@ -1,10 +1,17 @@
 \documentclass[landscape,a4paper]{article}
 \makeatletter
-\def\input@path{{../}}
+\def\input@path{{../../Templates/}}
 \makeatother
 \usepackage{eng-cheatsheet}
 
+% Use ragged-right alignment for card text and titles.
+\tcbset{halign=flush left,halign title=flush left}
+% Reserve the full column remainder for non-final pieces of a split card.
+% This keeps tcolorbox's height estimate in sync with multicols*.
+\tcbset{height fixed for=first and middle}
+
 \begin{document}
+\raggedright
 	
 	\begin{cheatsheetcolumns}
 		\begin{card}{Combination Numbers}

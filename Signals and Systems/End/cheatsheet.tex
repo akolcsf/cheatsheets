@@ -1,0 +1,135 @@
+\documentclass[a4paper]{ctexart}
+\makeatletter
+\def\input@path{{../../Templates/}}
+\makeatother
+\usepackage{zh-cheatsheet}
+\geometry{a4paper,portrait,top=0.3cm,bottom=0.3cm,left=0.3cm,right=0.3cm}
+\usepackage{array}
+\usepackage{tabularx}
+
+\newcommand{\CT}{\mathrm{CT}}
+\newcommand{\DT}{\mathrm{DT}}
+\newcommand{\FT}{\mathcal{F}}
+\newcommand{\FS}{\mathcal{FS}}
+\newcommand{\ZT}{\mathcal{Z}}
+\newcommand{\LT}{\mathcal{L}}
+\newcommand{\ut}{u(t)}
+\newcommand{\un}{u[n]}
+\newcommand{\dt}{\delta(t)}
+\newcommand{\dn}{\delta[n]}
+\newcommand{\Sa}{\operatorname{Sa}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\newcolumntype{S}{>{\hsize=.40\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\newcolumntype{M}{>{\hsize=1.25\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\hsize=1.35\hsize\linewidth=\hsize\raggedright\arraybackslash}X}
+
+\begin{document}
+
+  \begin{cheatsheetcolumns}[2]
+  \begin{card}{信号与系统 Cheatsheet}
+    \begin{itemize}
+      \item 本表按模块分步整理；当前先整理第一部分“常用表”。
+      \item 约定：连续时间用 $t,\omega,s$；离散时间用 $n,\Omega,z$。
+      \item 傅里叶变换约定：$F(\omega)=\displaystyle\int_{-\infty}^{+\infty}f(t)\e^{-\ii\omega t}\,\odif{t}$。
+      \item 常见算子：卷积 $*$，相关 $R_{xy}$，频率响应 $H$，系统函数 $H(s),H(z)$。
+    \end{itemize}
+  \end{card}
+
+  \begin{card}{一、常用表：傅里叶变换}
+    {\scriptsize\setlength{\tabcolsep}{0.5pt}\renewcommand{\arraystretch}{0.95}\setlength{\jot}{0pt}
+    \begin{tabularx}{\linewidth}{@{}S|M|R@{}}
+      信号名 & $f(t)$ & $F(\omega)$ \\ \hline
+      单边指数 & $E\e^{-at}u(t)$
+        & $\dfrac{E}{a+\ii\omega}$ \\ \hline
+      双边指数 & $E\e^{-a|t|}$
+        & $\dfrac{2aE}{a^2+\omega^2}$ \\ \hline
+      矩形脉冲 & $\begin{cases}E,& |t|<\dfrac{\tau}{2}\\0,&\text{else}\end{cases}$
+        & $E\tau\,\Sa\!\left(\dfrac{\omega\tau}{2}\right)$ \\ \hline
+      高斯脉冲 & $E\e^{-(t/\tau)^2}$
+        & $\sqrt{\pi}\,E\tau\,\e^{-(\omega\tau/2)^2}$ \\ \hline
+      余弦窗脉冲 & $\begin{cases}E\cos\!\left(\dfrac{\pi t}{\tau}\right),& |t|<\dfrac{\tau}{2}\\0,&\text{else}\end{cases}$
+        & $\dfrac{2E\tau}{\pi}\dfrac{\cos(\omega\tau/2)}{1-(\omega\tau/\pi)^2}$ \\ \hline
+      升余弦窗 & $\begin{cases}\dfrac{E}{2}\left(1+\cos\dfrac{2\pi t}{\tau}\right),& |t|<\dfrac{\tau}{2}\\0,&\text{else}\end{cases}$
+        & $\dfrac{E\tau}{2}\dfrac{\Sa(\omega\tau/2)}{1-(\omega\tau/2\pi)^2}$ \\ \hline
+      三角脉冲 & $E(1-2|t|/\tau)$; $|t|<\tau/2$
+        & $\dfrac{E\tau}{2}\Sa^2(\omega\tau/4)$ \\ \hline
+      梯形脉冲 & $\begin{cases}
+        \dfrac{2E}{\tau-\tau_1}(t+\dfrac{\tau}{2}),& -\dfrac{\tau}{2}<t<-\dfrac{\tau_1}{2}\\
+        E,& -\dfrac{\tau_1}{2}<t<\dfrac{\tau_1}{2}\\
+        \dfrac{2E}{\tau-\tau_1}(\dfrac{\tau}{2}-t),& \dfrac{\tau_1}{2}<t<\dfrac{\tau}{2}
+      \end{cases}$
+        & $\dfrac{8E\sin\!\left(\dfrac{\omega(\tau+\tau_1)}{4}\right)\sin\!\left(\dfrac{\omega(\tau-\tau_1)}{4}\right)}{(\tau-\tau_1)\omega^2}$ \\ \hline
+      抽样函数 & $\Sa(\omega_c t)$
+        & $\dfrac{\pi}{\omega_c},\quad |\omega|<\omega_c$ \\ \hline
+      斜变指数 & $t\e^{-at}u(t)$
+        & $\dfrac{1}{(a+\ii\omega)^2}$ \\ \hline
+      冲激 & $E\delta(t)$
+        & $E$ \\ \hline
+      阶跃 & $Eu(t)$
+        & $\dfrac{E}{\ii\omega}+\pi E\delta(\omega)$ \\ \hline
+      符号函数 & $E\operatorname{sgn}(t)$
+        & $\dfrac{2E}{\ii\omega}$ \\ \hline
+      常数 & $E$
+        & $2\pi E\delta(\omega)$ \\ \hline
+      周期冲激列 & $\delta_T(t)$
+        & $\Omega\delta_\Omega(\omega)$ \\ \hline
+      余弦 & $E\cos(\omega_0t)$
+        & $E\pi[\delta(\omega+\omega_0)+\delta(\omega-\omega_0)]$ \\ \hline
+      正弦 & $E\sin(\omega_0t)$
+        & $\ii E\pi[\delta(\omega+\omega_0)-\delta(\omega-\omega_0)]$ \\ \hline
+      单边余弦 & $E\cos(\omega_0t)u(t)$
+        & $\dfrac{E\pi}{2}[\delta(\omega+\omega_0)+\delta(\omega-\omega_0)]+\dfrac{\ii\omega E}{\omega_0^2-\omega^2}$ \\ \hline
+      单边正弦 & $E\sin(\omega_0t)u(t)$
+        & $\dfrac{E\pi}{2\ii}[\delta(\omega-\omega_0)-\delta(\omega+\omega_0)]+\dfrac{\omega_0E}{\omega_0^2-\omega^2}$ \\ \hline
+      复指数 & $E\e^{\ii\omega_0t}$
+        & $2\pi E\delta(\omega-\omega_0)$ \\ \hline
+      阻尼正弦 & $\e^{-at}\sin(\omega_0t)u(t)$
+        & $\dfrac{\omega_0}{(a+\ii\omega)^2+\omega_0^2}$ \\ \hline
+      阻尼余弦 & $\e^{-at}\cos(\omega_0t)u(t)$
+        & $\dfrac{a+\ii\omega}{(a+\ii\omega)^2+\omega_0^2}$ \\ \hline
+      双指数响应 & $\dfrac{1}{\beta-\alpha}\left(\e^{-\alpha t}-\e^{-\beta t}\right)u(t)$
+        & $\dfrac{1}{(\ii\omega+\alpha)(\ii\omega+\beta)}$ \\ \hline
+      单边斜变 & $tu(t)$
+        & $\ii\pi\delta'(\omega)-\dfrac{1}{\omega^2}$ \\ \hline
+      截断余弦 & $\begin{cases}
+          \cos(\omega_0t),& |t|<\dfrac{\tau}{2}\\
+          0,&\text{else}
+          \end{cases}$
+        & $\dfrac{\tau}{2}\left[\Sa\!\left(\dfrac{(\omega-\omega_0)\tau}{2}\right)+\Sa\!\left(\dfrac{(\omega+\omega_0)\tau}{2}\right)\right]$ \\ \hline
+    \end{tabularx}}
+  \end{card}
+
+  \begin{card}{二、常用表：拉普拉斯变换}
+    {\scriptsize\setlength{\tabcolsep}{1pt}\renewcommand{\arraystretch}{1.08}
+    \begin{tabularx}{\linewidth}{@{}M|R@{}}
+      $f(t)$ & $F(s)=\LT\{f(t)\}$ \\ \hline
+      $\dfrac{1}{a}\sinh(at)$
+        & $\dfrac{1}{s^2-a^2}$ \\ \hline
+      $\cosh(at)$
+        & $\dfrac{s}{s^2-a^2}$ \\ \hline
+      $\e^{at}$
+        & $\dfrac{1}{s-a}$ \\ \hline
+      $\dfrac{t^{n-1}\e^{at}}{(n-1)!}$
+        & $\dfrac{1}{(s-a)^n}$ \\ \hline
+      $\e^{\alpha t}\sin(\omega t)$
+        & $\dfrac{\omega}{(s-\alpha)^2+\omega^2}$ \\ \hline
+      $\e^{\alpha t}\cos(\omega t)$
+        & $\dfrac{s-\alpha}{(s-\alpha)^2+\omega^2}$ \\ \hline
+      $\dfrac{1}{2\omega^3}\left(\sin(\omega t)-\omega t\cos(\omega t)\right)$
+        & $\dfrac{1}{(s^2+\omega^2)^2}$ \\ \hline
+      $\dfrac{t}{2\omega}\sin(\omega t)$
+        & $\dfrac{s}{(s^2+\omega^2)^2}$ \\ \hline
+      $t\cos(\omega t)$
+        & $\dfrac{s^2-\omega^2}{(s^2+\omega^2)^2}$ \\ \hline
+      $\delta(t)$
+        & $1$ \\ \hline
+      $u(t)$
+        & $\dfrac{1}{s}$ \\ \hline
+      $\dfrac{t^n}{n!}$
+        & $\dfrac{1}{s^{n+1}}$ \\ \hline
+    \end{tabularx}}
+  \end{card}
+  \end{cheatsheetcolumns}
+
+\end{document}
